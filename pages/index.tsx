@@ -1,5 +1,5 @@
-import type { NextPage } from "next";
-import { Grid, Typography, SvgIcon } from "@mui/material";
+import {  Typography } from "@mui/material";
+import { NextPage } from "next/types";
 
 const Home: NextPage = () => {
   return (
@@ -7,19 +7,6 @@ const Home: NextPage = () => {
       <Typography variant="h1" sx={{ color: "text.primary" }}>
         SolarPLus
       </Typography>
-      <Typography variant="h2" sx={{ color: "action.active" }}>
-        SolarPLus
-      </Typography>
-      <Typography variant="h3" sx={{ color: "action.active" }}>
-        SolarPLus
-      </Typography>
-      <Typography variant="h4" sx={{ color: "action.active" }}>
-        SolarPLus
-      </Typography>
-      <Typography variant="h5" sx={{ color: "action.active" }}>
-        SolarPLus
-      </Typography>
-      <Typography sx={{ color: "primary.main" }}>SolarPLus</Typography>
     </div>
   );
 };

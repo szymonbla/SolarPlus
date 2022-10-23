@@ -53,3 +53,17 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model LocationCoordinates {
+  id        String @unique
+  latitude  String
+  longitude String
+  farm      Farm[]
+}
+
+model Farm {
+  id                    String              @id @default(cuid())
+  farmName              String              @unique
+  location              LocationCoordinates @relation(fields: [locationCoordinatesId], references: [id])
+  locationCoordinatesId String
+}

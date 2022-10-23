@@ -6,8 +6,7 @@ import { BaseLayout } from "layouts";
 import { GoogleFormButton } from "common/components";
 
 import LoginIllustration from "common/images/login.svg";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { signIn } from "next-auth/react";
 
 const float = keyframes({
   "0%": { transform: "translatey(0px)" },

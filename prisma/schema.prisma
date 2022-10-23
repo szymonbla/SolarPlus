@@ -22,8 +22,7 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -55,10 +54,17 @@ model VerificationToken {
 }
 
 model LocationCoordinates {
-  id        String @unique
+  id        String @id @default(cuid())
   latitude  String
   longitude String
-  farm      Farm[]
+  Farm      Farm[]
+}
+
+model PvPanel {
+  id        String @id @default(cuid())
+  peakPower Int
+  loss      Int
+  Farm      Farm[]
 }
 
 model Farm {
@@ -66,4 +72,6 @@ model Farm {
   farmName              String              @unique
   location              LocationCoordinates @relation(fields: [locationCoordinatesId], references: [id])
   locationCoordinatesId String
+  pvPanel               PvPanel             @relation(fields: [pvPanelId], references: [id])
+  pvPanelId             String
 }

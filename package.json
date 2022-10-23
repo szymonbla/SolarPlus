@@ -9,7 +9,8 @@
     "lint": "next lint",
     "test": "jest",
     "prepare": "husky install",
-    "prismaDev": "dotenv -e .env.local -- npx prisma db push"
+    "prismaPush": "dotenv -e .env.local -- npx prisma db push",
+    "prismaStudio": "dotenv -e .env.local -- npx prisma studio"
   },
   "dependencies": {
     "@emotion/cache": "^11.10.3",

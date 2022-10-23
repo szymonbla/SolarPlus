@@ -22,8 +22,7 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -52,4 +51,27 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model LocationCoordinates {
+  id        String @id @default(cuid())
+  latitude  String
+  longitude String
+  Farm      Farm[]
+}
+
+model PvPanel {
+  id        String @id @default(cuid())
+  peakPower Int
+  loss      Int
+  Farm      Farm[]
+}
+
+model Farm {
+  id                    String              @id @default(cuid())
+  farmName              String              @unique
+  location              LocationCoordinates @relation(fields: [locationCoordinatesId], references: [id])
+  locationCoordinatesId String
+  pvPanel               PvPanel             @relation(fields: [pvPanelId], references: [id])
+  pvPanelId             String
 }

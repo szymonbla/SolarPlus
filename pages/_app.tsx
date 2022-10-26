@@ -14,7 +14,7 @@ const MyApp = (props: AppProps) => {
   return (
     <CacheProvider value={emotionCache}>
       <ThemeProvider theme={theme}>
-        <SessionProvider session={pageProps.session} basePath="/login">
+        <SessionProvider session={pageProps.session}>
           <CssBaseline />
           <Component {...pageProps} />
         </SessionProvider>

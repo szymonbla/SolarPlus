@@ -1,13 +1,12 @@
 import Image from "next/image";
 import { keyframes } from "@emotion/react";
 import { Typography, Grid } from "@mui/material";
+import { signIn } from "next-auth/react";
 
 import { BaseLayout } from "layouts";
 import { GoogleFormButton } from "common/components";
-
 import LoginIllustration from "common/images/login.svg";
-import { getSession, signIn } from "next-auth/react";
-import { GetServerSideProps } from "next/types";
+import { RoutesDefinition } from "common/routes";
 
 const float = keyframes({
   "0%": { transform: "translatey(0px)" },
@@ -18,7 +17,7 @@ const float = keyframes({
 const LoginPage = () => {
   const handleGoogleSignIn = async () => {
     try {
-      await signIn("google");
+      await signIn("google", { callbackUrl: RoutesDefinition.dashboard });
     } catch (error) {
       console.log(error);
     }
@@ -67,17 +66,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const session = await getSession({ req });
-
-  if (session) {
-    return {
-      redirect: { destination: "/dashboard", permanent: false },
-    };
-  }
-
-  return {
-    props: { session },
-  };
-};

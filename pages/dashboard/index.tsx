@@ -1,30 +1,17 @@
 import { Button } from "@mui/material";
-import { GetServerSideProps } from "next/types";
-import { getSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
+
+import { DashboardLayout } from "layouts/DashboardLayout";
+import { RoutesDefinition } from "common/routes";
 
 const DashboardPage = () => {
   const handleGoogleSignOut = () => {
-    signOut();
+    signOut({ callbackUrl: RoutesDefinition.login });
   };
   return (
-    <div>
+    <DashboardLayout>
       <Button onClick={handleGoogleSignOut}>Sign out</Button>
-    </div>
+    </DashboardLayout>
   );
 };
-
 export default DashboardPage;
-
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const session = await getSession({ req });
-
-  if (!session) {
-    return {
-      redirect: { destination: "/", permanent: false },
-    };
-  }
-
-  return {
-    props: { session },
-  };
-};

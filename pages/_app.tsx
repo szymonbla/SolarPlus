@@ -36,8 +36,13 @@ const MyApp = (props: AppProps) => {
     </CacheProvider>
   );
 };
+export default MyApp;
 
-const Auth = (children: any) => {
+interface AuthProps {
+  children: any;
+}
+
+const Auth = ({ children }: AuthProps) => {
   // if `{ required: true }` is supplied, `status` can only be "loading" or "authenticated"
   const { status } = useSession({ required: true });
 
@@ -47,5 +52,3 @@ const Auth = (children: any) => {
 
   return children;
 };
-
-export default MyApp;

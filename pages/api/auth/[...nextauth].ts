@@ -19,10 +19,9 @@ export default NextAuth({
     }),
     // ...add more providers here
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: `${process.env.GOOGLE_CLIENT_SECRET}`,
   adapter: PrismaAdapter(prisma),
   pages: {
     signIn: "/",
   },
-  debug: true,
 });

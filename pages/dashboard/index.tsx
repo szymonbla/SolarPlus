@@ -15,3 +15,4 @@ const DashboardPage = () => {
   );
 };
 export default DashboardPage;
+DashboardPage.auth = true;

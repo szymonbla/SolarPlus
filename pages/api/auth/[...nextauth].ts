@@ -24,4 +24,5 @@ export default NextAuth({
   pages: {
     signIn: "/",
   },
+  debug: true,
 });

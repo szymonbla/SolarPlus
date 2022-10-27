@@ -1,17 +1,19 @@
 import { Button } from "@mui/material";
 import { signOut } from "next-auth/react";
 
-import { DashboardLayout } from "layouts/DashboardLayout";
+import { BaseLayout } from "layouts";
 import { RoutesDefinition } from "common/routes";
+import { Sitebar, MapComponent } from "common/components";
 
 const DashboardPage = () => {
   const handleGoogleSignOut = () => {
     signOut({ callbackUrl: RoutesDefinition.login });
   };
   return (
-    <DashboardLayout>
-      <Button onClick={handleGoogleSignOut}>Sign out</Button>
-    </DashboardLayout>
+    <BaseLayout sx={{ display: "flex", backgroundColor: "common.white" }}>
+      <Sitebar handleClick={handleGoogleSignOut} />
+      <MapComponent />
+    </BaseLayout>
   );
 };
 export default DashboardPage;

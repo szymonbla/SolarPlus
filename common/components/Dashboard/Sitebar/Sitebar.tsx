@@ -11,19 +11,33 @@ export const Sitebar = ({ handleClick }: SitebarProps) => {
     <Grid
       display="flex"
       flexDirection="column"
+      alignItems="center"
       sx={{
         width: "20%",
         height: "100%",
         backgroundColor: "background.default",
       }}
     >
-      <Grid display="flex" flexDirection="column" sx={{ mb: "2rem" }}>
+      <Grid
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        sx={{ mb: "2rem" }}
+      >
         <Profile />
-        <Button onClick={handleClick} sx={{ backgroundColor: "common.white", borderRadius: '12px' }}>
+        <Button
+          onClick={handleClick}
+          sx={{
+            backgroundColor: "common.white",
+            borderRadius: "12px",
+            width: "40%",
+          }}
+        >
           Sign out
         </Button>
       </Grid>
-      <Divider sx={{ width: "80%", textAlign: "center" }} />
+      <Divider sx={{ width: "80%" }} />
     </Grid>
   );
 };

@@ -1,9 +1,17 @@
-import { Button } from "@mui/material";
 import { signOut } from "next-auth/react";
 
 import { BaseLayout } from "layouts";
 import { RoutesDefinition } from "common/routes";
-import { Sitebar, MapComponent } from "common/components";
+import { LoadingSpinner, Sitebar } from "common/components";
+import dynamic from "next/dynamic";
+import { Grid } from "@mui/material";
+const MapComponent = dynamic(
+  () =>
+    import("common/components/Dashboard/MapComponent/MapComponent").then(
+      (item) => item.MapComponent
+    ),
+  { ssr: false, loading: () => <LoadingSpinner /> }
+);
 
 const DashboardPage = () => {
   const handleGoogleSignOut = () => {
@@ -12,7 +20,9 @@ const DashboardPage = () => {
   return (
     <BaseLayout sx={{ display: "flex", backgroundColor: "common.white" }}>
       <Sitebar handleClick={handleGoogleSignOut} />
-      <MapComponent />
+      <Grid sx={{ width: "80%" }}>
+        <MapComponent />
+      </Grid>
     </BaseLayout>
   );
 };

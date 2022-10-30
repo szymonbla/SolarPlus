@@ -29,8 +29,8 @@ export const theme = createTheme({
       default: "#a8e8f9",
     },
     action: {
-      active: "#FB8500",
-      hover: "#FFB703",
+      hover: "#FB8500",
+      active: "#FFB703",
     },
     primary: {
       main: "#219EBC",

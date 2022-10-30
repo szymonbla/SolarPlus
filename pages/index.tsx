@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { keyframes } from "@emotion/react";
-import { Typography, Grid } from "@mui/material";
+import { Typography, Grid, Button } from "@mui/material";
 import { signIn } from "next-auth/react";
 
 import { BaseLayout } from "layouts";

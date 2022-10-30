@@ -5,6 +5,8 @@ import { RoutesDefinition } from "common/routes";
 import { CreationFarm, LoadingSpinner, Sitebar } from "common/components";
 import dynamic from "next/dynamic";
 import { Grid } from "@mui/material";
+import { useAppDispatch } from "redux/hooks";
+import { openModal } from "redux/reducers";
 const MapComponent = dynamic(
   () =>
     import("common/components/Dashboard/MapComponent/MapComponent").then(

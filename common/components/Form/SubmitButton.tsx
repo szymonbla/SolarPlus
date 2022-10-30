@@ -1,4 +1,5 @@
 import { Button, SxProps } from "@mui/material";
+import Image from "next/image";
 
 interface SubmitButtonProps {
   label: string;
@@ -6,10 +7,15 @@ interface SubmitButtonProps {
   sx?: SxProps;
 }
 
-export const SubmitButton = ({ label, sx }: SubmitButtonProps) => {
+export const SubmitButton = ({
+  label,
+  handleClick,
+  sx,
+}: SubmitButtonProps) => {
   return (
     <Button
       type="submit"
+      onClick={handleClick}
       sx={{
         backgroundColor: "primary.main",
         width: "100%",

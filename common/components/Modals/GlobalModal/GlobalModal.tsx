@@ -2,16 +2,18 @@ import { ReactNode } from "react";
 import { Modal, Box } from "@mui/material";
 import { useAppSelector } from "redux/hooks";
 import { selectModalState } from "redux/reducers";
-import { RootState } from "redux/store";
 interface GlobalModalProps {
+  handleClose: () => void;
   children?: ReactNode;
 }
 
-export const GlobalModal = ({ children }: GlobalModalProps) => {
+export const GlobalModal = ({ handleClose, children }: GlobalModalProps) => {
   const isModalOpen = useAppSelector(selectModalState);
+
   return (
     <Modal
       open={isModalOpen}
+      onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
       sx={{
@@ -23,9 +25,9 @@ export const GlobalModal = ({ children }: GlobalModalProps) => {
       <Box
         sx={{
           backgroundColor: "common.white",
-          minWidth: 1000,
-          minHeight: 600,
-          borderRadius: 8,
+          minWidth: 900,
+          minHeight: 500,
+          borderRadius: "2rem",
           position: "relative",
           px: 4,
           py: 2,

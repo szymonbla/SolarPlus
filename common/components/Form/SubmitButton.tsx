@@ -11,20 +11,22 @@ export const SubmitButton = ({ label, sx }: SubmitButtonProps) => {
     <Button
       type="submit"
       sx={{
-        backgroundColor: "common.white",
+        backgroundColor: "primary.main",
         width: "100%",
         typography: "body1",
-        fontWeight: "00",
+        fontWeight: "600",
         color: "text.primary",
-        borderRadius: 3,
+        borderRadius: 2,
+        boxShadow: (theme) =>
+          `0px 15px 15px -10px ${theme.palette.primary.main}`,
         "&:hover": {
-          backgroundColor: "common.white",
+          backgroundColor: "primary.main",
         },
         "&:active": {
-          backgroundColor: "common.white",
+          backgroundColor: "primary.main",
         },
         "&:focus": {
-          backgroundColor: "common.white",
+          backgroundColor: "primary.main",
         },
         ...sx,
       }}

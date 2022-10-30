@@ -24,7 +24,7 @@ export const CallToActionButton = ({
         fontWeight: "600",
         px: "1rem",
         py: "0.5rem",
-        borderRadius: 6,
+        borderRadius: 2,
         color: "text.primary",
         boxShadow: (theme) =>
           `0px 15px 15px -10px ${theme.palette.action.hover}`,

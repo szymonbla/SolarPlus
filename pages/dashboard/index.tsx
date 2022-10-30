@@ -1,12 +1,11 @@
+import dynamic from "next/dynamic";
 import { signOut } from "next-auth/react";
+import { Grid } from "@mui/material";
 
 import { BaseLayout } from "layouts";
 import { RoutesDefinition } from "common/routes";
 import { CreationFarm, LoadingSpinner, Sitebar } from "common/components";
-import dynamic from "next/dynamic";
-import { Grid } from "@mui/material";
-import { useAppDispatch } from "redux/hooks";
-import { openModal } from "redux/reducers";
+
 const MapComponent = dynamic(
   () =>
     import("common/components/Dashboard/MapComponent/MapComponent").then(

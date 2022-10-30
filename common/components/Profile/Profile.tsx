@@ -23,7 +23,9 @@ export const Profile = () => {
           mb: "1rem",
         }}
       />
-      <Typography variant="h4">{session?.user?.name}</Typography>
+      <Typography variant="h4" fontWeight="600">
+        {session?.user?.name}
+      </Typography>
     </Grid>
   );
 };

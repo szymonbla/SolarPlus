@@ -1,6 +1,7 @@
-import { Button, Divider, Grid } from "@mui/material";
+import { Divider, Grid } from "@mui/material";
 
-import { Profile } from "common/components";
+import { SubmitButton, Profile } from "common/components";
+import { CallToActionButton } from "common/components/Shared";
 import { useAppDispatch } from "redux/hooks";
 import { openModal } from "redux/reducers";
 interface SitebarProps {
@@ -33,28 +34,15 @@ export const Sitebar = ({ handleClick }: SitebarProps) => {
         sx={{ mb: "2rem" }}
       >
         <Profile />
-        <Button
-          onClick={handleClick}
-          sx={{
-            backgroundColor: "common.white",
-            borderRadius: "12px",
-            width: "40%",
-          }}
-        >
-          Sign out
-        </Button>
+        <SubmitButton handleClick={handleClick} label="Sign out" />
       </Grid>
       <Divider sx={{ width: "80%" }} />
-      <Button
-        onClick={openCreationFarmModal}
-        sx={{
-          backgroundColor: "common.white",
-          borderRadius: "12px",
-          width: "40%",
-        }}
-      >
-        Create farm
-      </Button>
+      <CallToActionButton
+        handleClick={openCreationFarmModal}
+        label="Create farm"
+        type="button"
+        sx={{ width: "50%", my: "2rem" }}
+      />
     </Grid>
   );
 };

@@ -3,12 +3,13 @@ import { ThemeProvider, CssBaseline } from "@mui/material";
 import { SessionProvider, useSession } from "next-auth/react";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
+import { Provider as ReduxProvider } from "react-redux";
 
 import { theme } from "common/styles/theme/theme";
 import { LoadingSpinner } from "common/components";
 import { ProtectedRoutes } from "common/routes/protectedRoutes";
 import { createEmotionCache } from "common/styles/theme/createEmotionCache";
-
+import { store } from "redux/store";
 const clientSideEmotionCache = createEmotionCache();
 
 const MyApp = (props: AppProps) => {
@@ -20,20 +21,22 @@ const MyApp = (props: AppProps) => {
   };
 
   return (
-    <CacheProvider value={emotionCache}>
-      <ThemeProvider theme={theme}>
-        <SessionProvider session={pageProps.session}>
-          <CssBaseline />
-          {isProtectedRoute() ? (
-            <Auth>
+    <ReduxProvider store={store}>
+      <CacheProvider value={emotionCache}>
+        <ThemeProvider theme={theme}>
+          <SessionProvider session={pageProps.session}>
+            <CssBaseline />
+            {isProtectedRoute() ? (
+              <Auth>
+                <Component {...pageProps} />
+              </Auth>
+            ) : (
               <Component {...pageProps} />
-            </Auth>
-          ) : (
-            <Component {...pageProps} />
-          )}
-        </SessionProvider>
-      </ThemeProvider>
-    </CacheProvider>
+            )}
+          </SessionProvider>
+        </ThemeProvider>
+      </CacheProvider>
+    </ReduxProvider>
   );
 };
 export default MyApp;

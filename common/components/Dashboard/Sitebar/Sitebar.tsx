@@ -1,12 +1,19 @@
 import { Button, Divider, Grid } from "@mui/material";
 
 import { Profile } from "common/components";
-
+import { useAppDispatch } from "redux/hooks";
+import { openModal } from "redux/reducers";
 interface SitebarProps {
   handleClick: () => void;
 }
 
 export const Sitebar = ({ handleClick }: SitebarProps) => {
+  const dispatch = useAppDispatch();
+
+  const openCreationFarmModal = () => {
+    dispatch(openModal());
+  };
+
   return (
     <Grid
       display="flex"
@@ -38,6 +45,16 @@ export const Sitebar = ({ handleClick }: SitebarProps) => {
         </Button>
       </Grid>
       <Divider sx={{ width: "80%" }} />
+      <Button
+        onClick={openCreationFarmModal}
+        sx={{
+          backgroundColor: "common.white",
+          borderRadius: "12px",
+          width: "40%",
+        }}
+      >
+        Create farm
+      </Button>
     </Grid>
   );
 };

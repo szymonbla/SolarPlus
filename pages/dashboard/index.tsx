@@ -2,7 +2,7 @@ import { signOut } from "next-auth/react";
 
 import { BaseLayout } from "layouts";
 import { RoutesDefinition } from "common/routes";
-import { LoadingSpinner, Sitebar } from "common/components";
+import { CreationFarm, LoadingSpinner, Sitebar } from "common/components";
 import dynamic from "next/dynamic";
 import { Grid } from "@mui/material";
 const MapComponent = dynamic(
@@ -19,6 +19,7 @@ const DashboardPage = () => {
   };
   return (
     <BaseLayout sx={{ display: "flex", backgroundColor: "common.white" }}>
+      <CreationFarm />
       <Sitebar handleClick={handleGoogleSignOut} />
       <Grid sx={{ width: "80%" }}>
         <MapComponent />

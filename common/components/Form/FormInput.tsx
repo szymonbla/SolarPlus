@@ -1,4 +1,4 @@
-import { Input, InputLabel, SxProps } from "@mui/material";
+import { Input, InputLabel } from "@mui/material";
 
 interface FormInputProps {
   label: string;

@@ -3,18 +3,21 @@ import Image from "next/image";
 
 interface SubmitButtonProps {
   label: string;
-  handleClick: () => void;
+  handleClick?: () => void;
+  formId?: string;
   sx?: SxProps;
 }
 
 export const SubmitButton = ({
   label,
   handleClick,
+  formId,
   sx,
 }: SubmitButtonProps) => {
   return (
     <Button
       type="submit"
+      form={formId}
       onClick={handleClick}
       sx={{
         backgroundColor: "primary.main",

@@ -1,7 +1,7 @@
-export interface Farm {
+export interface FarmI {
   id?: string;
   farmName?: string;
-  location?: LocationCoordinates;
+  location: LocationCoordinates;
   pvPanel?: PvPanelAttributes;
 }
 

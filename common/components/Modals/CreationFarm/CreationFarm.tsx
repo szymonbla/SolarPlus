@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Grid, Typography } from "@mui/material";
 import { useAppDispatch } from "redux/hooks";
-import { closeModal } from "redux/reducers";
+import { closeModal, configureNewFarm, FarmCreationI } from "redux/reducers";
 
 import { GlobalModal } from "common/components/Modals/GlobalModal";
 import { CancelButton, SubmitButton } from "common/components/Form";
@@ -17,8 +17,12 @@ export const CreationFarm = ({ children }: CreationFarmI) => {
     dispatch(closeModal());
   };
 
-  const nextStep = (sendObject: FarmConfigurationData) => {
-    console.log(sendObject);
+  const nextStep = ({
+    latitude,
+    longitude,
+    farmName,
+  }: FarmConfigurationData) => {
+    dispatch(configureNewFarm({ location: { latitude, longitude }, farmName }));
   };
 
   return (
@@ -30,7 +34,11 @@ export const CreationFarm = ({ children }: CreationFarmI) => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        sx={{ maxWidth: 650, margin: "auto", minHeight: "400px" }}
+        sx={{
+          maxWidth: 650,
+          margin: "auto",
+          height: `calc(100% - ${75}px)`,
+        }}
       >
         <FarmInitializationForm
           handleSubmit={nextStep}
@@ -62,7 +70,7 @@ export const CreationFarm = ({ children }: CreationFarmI) => {
         <SubmitButton
           label="Next"
           formId="creationFarmForm"
-          sx={{ width: "20%" }}
+          sx={{ width: "15%", py: 1 }}
         />
       </Grid>
     </GlobalModal>

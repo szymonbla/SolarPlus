@@ -26,7 +26,7 @@ export const GlobalModal = ({ handleClose, children }: GlobalModalProps) => {
         sx={{
           backgroundColor: "common.white",
           minWidth: 900,
-          minHeight: 500,
+          height: 500,
           borderRadius: "2rem",
           position: "relative",
           px: 4,

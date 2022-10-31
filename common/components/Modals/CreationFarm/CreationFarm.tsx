@@ -1,11 +1,15 @@
+import { ReactNode } from "react";
 import { Grid, Typography } from "@mui/material";
 import { useAppDispatch } from "redux/hooks";
 import { closeModal } from "redux/reducers";
 
-import { CancelButton, SubmitButton } from "common/components/Form";
 import { GlobalModal } from "common/components/Modals/GlobalModal";
-import { FormInputField } from "common/components/Form";
-export const CreationFarm = () => {
+import { CancelButton, SubmitButton } from "common/components/Form";
+
+interface CreationFarmI {
+  children?: ReactNode;
+}
+export const CreationFarm = ({ children }: CreationFarmI) => {
   const dispatch = useAppDispatch();
 
   const closeCreationModal = () => {
@@ -21,9 +25,9 @@ export const CreationFarm = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        sx={{ width: "100%", px: '8rem' }}
+        sx={{ maxWidth: 700, margin: "auto" }}
       >
-        <FormInputField label="Farm name" name="farmName" type="text" />
+        {children}
       </Grid>
       <Grid
         display="flex"

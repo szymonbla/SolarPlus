@@ -13,7 +13,7 @@ const customBodyFontSize = (fontSize: number) => ({
 export const theme = createTheme({
   palette: {
     common: {
-      black: "#1A1A1A",
+      black: "#161618",
       white: "#FFFFFF",
     },
     success: {

@@ -5,7 +5,8 @@ import { closeModal } from "redux/reducers";
 
 import { GlobalModal } from "common/components/Modals/GlobalModal";
 import { CancelButton, SubmitButton } from "common/components/Form";
-
+import { FarmInitializationForm } from "./FarmConfigurationForms";
+import { FarmConfigurationData } from "common/components/Modals/types";
 interface CreationFarmI {
   children?: ReactNode;
 }
@@ -14,6 +15,10 @@ export const CreationFarm = ({ children }: CreationFarmI) => {
 
   const closeCreationModal = () => {
     dispatch(closeModal());
+  };
+
+  const nextStep = (sendObject: FarmConfigurationData) => {
+    console.log(sendObject);
   };
 
   return (
@@ -25,9 +30,12 @@ export const CreationFarm = ({ children }: CreationFarmI) => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        sx={{ maxWidth: 700, margin: "auto" }}
+        sx={{ maxWidth: 650, margin: "auto", minHeight: "400px" }}
       >
-        {children}
+        <FarmInitializationForm
+          handleSubmit={nextStep}
+          formId="creationFarmForm"
+        />
       </Grid>
       <Grid
         display="flex"
@@ -52,8 +60,8 @@ export const CreationFarm = ({ children }: CreationFarmI) => {
           sx={{ width: "20%" }}
         />
         <SubmitButton
-          handleClick={() => console.log("Next step")}
           label="Next"
+          formId="creationFarmForm"
           sx={{ width: "20%" }}
         />
       </Grid>

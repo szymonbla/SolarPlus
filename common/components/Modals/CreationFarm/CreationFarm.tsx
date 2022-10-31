@@ -17,8 +17,8 @@ export const CreationFarm = ({ children }: CreationFarmI) => {
     dispatch(closeModal());
   };
 
-  const nextStep = ({ farmName }: FarmConfigurationData) => {
-    console.log(farmName);
+  const nextStep = (sendObject: FarmConfigurationData) => {
+    console.log(sendObject);
   };
 
   return (

@@ -22,6 +22,8 @@ export const FarmInitializationForm = ({
     resolver: zodResolver(farmConfigurationSchema),
     defaultValues: {
       farmName: "",
+      latitude: "",
+      longitude: "",
     },
     reValidateMode: "onChange",
   });
@@ -37,7 +39,7 @@ export const FarmInitializationForm = ({
               type="text"
               sx={{ width: "100%" }}
             />
-            <Typography variant="h5" fontWeight="00" color="common.black">
+            <Typography variant="h5" fontWeight="600" color="common.black">
               Localization
             </Typography>
             <Grid display="flex" gap={2}>

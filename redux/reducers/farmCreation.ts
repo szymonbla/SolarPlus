@@ -1,17 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "redux/store";
-import { FarmI } from "types";
+import { FarmModelI } from "types";
 
-export interface FarmCreationI extends FarmI {
-  stepStatus?: number;
-}
-
-const initialState: FarmCreationI = {
-  stepStatus: 0,
+const initialState: Partial<FarmModelI> = {
   farmName: "",
   location: {
     latitude: "",
     longitude: "",
+  },
+  pvPanel: {
+    loss: 0,
+    peakPower: 0,
   },
 };
 
@@ -22,25 +21,27 @@ const farmCreationSlice = createSlice({
     configureNewFarm: (
       state,
       {
-        payload: {
-          farmName,
-          location: { latitude, longitude },
-        },
-      }: PayloadAction<FarmCreationI>
+        payload: { farmName, location, pvPanel },
+      }: PayloadAction<Partial<FarmModelI>>
     ) => {
-      return (state = {
+      return {
+        ...state,
         farmName,
         location: {
-          latitude,
-          longitude,
+          latitude: location?.latitude,
+          longitude: location?.longitude,
         },
-      });
+        pvPanel: {
+          loss: pvPanel?.loss,
+          peakPower: pvPanel?.peakPower,
+        },
+      };
     },
   },
 });
 
 const { actions, reducer } = farmCreationSlice;
-export const selectStepStatus = (state: RootState) => state.farm.stepStatus;
+export const selectState = (state: RootState) => state.farm;
 
 export const { configureNewFarm } = actions;
 export default reducer;

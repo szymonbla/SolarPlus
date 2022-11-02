@@ -1,6 +1,9 @@
+import { useCallback } from "react";
 import { Grid, Typography } from "@mui/material";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { configureNewFarm, selectState } from "redux/reducers";
 
 import {
   FarmConfigurationData,
@@ -9,14 +12,15 @@ import {
 import { FormInputField } from "common/components/Form";
 
 interface FarmInitializationFormProps {
-  handleSubmit: SubmitHandler<FarmConfigurationData>;
   formId: string;
 }
 
 export const FarmInitializationForm = ({
   formId,
-  handleSubmit,
 }: FarmInitializationFormProps) => {
+  const dispatch = useAppDispatch();
+  const actualState = useAppSelector(selectState);
+
   const formMethods = useForm<FarmConfigurationData>({
     mode: "onChange",
     resolver: zodResolver(farmConfigurationSchema),
@@ -27,6 +31,22 @@ export const FarmInitializationForm = ({
     },
     reValidateMode: "onChange",
   });
+
+  const handleSubmit = useCallback(
+    ({ farmName, latitude, longitude }: FarmConfigurationData) => {
+      dispatch(
+        configureNewFarm({
+          ...actualState,
+          farmName,
+          location: {
+            latitude: latitude,
+            longitude: longitude,
+          },
+        })
+      );
+    },
+    [actualState, dispatch]
+  );
 
   return (
     <Grid sx={{ width: "100%" }}>

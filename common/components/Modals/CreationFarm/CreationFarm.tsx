@@ -1,28 +1,16 @@
-import { ReactNode } from "react";
 import { Grid, Typography } from "@mui/material";
 import { useAppDispatch } from "redux/hooks";
-import { closeModal, configureNewFarm, FarmCreationI } from "redux/reducers";
+import { closeModal } from "redux/reducers";
 
 import { GlobalModal } from "common/components/Modals/GlobalModal";
 import { CancelButton, SubmitButton } from "common/components/Form";
-import { FarmInitializationForm } from "./FarmConfigurationForms";
-import { FarmConfigurationData } from "common/components/Modals/types";
-interface CreationFarmI {
-  children?: ReactNode;
-}
-export const CreationFarm = ({ children }: CreationFarmI) => {
+import { creationFormResolver } from "./FarmConfigurationForms/formResolver";
+
+export const CreationFarm = () => {
   const dispatch = useAppDispatch();
 
   const closeCreationModal = () => {
     dispatch(closeModal());
-  };
-
-  const nextStep = ({
-    latitude,
-    longitude,
-    farmName,
-  }: FarmConfigurationData) => {
-    dispatch(configureNewFarm({ location: { latitude, longitude }, farmName }));
   };
 
   return (
@@ -40,10 +28,7 @@ export const CreationFarm = ({ children }: CreationFarmI) => {
           height: `calc(100% - ${75}px)`,
         }}
       >
-        <FarmInitializationForm
-          handleSubmit={nextStep}
-          formId="creationFarmForm"
-        />
+        {creationFormResolver(1, "solarPanelsConfiguration")}
       </Grid>
       <Grid
         display="flex"
@@ -69,7 +54,7 @@ export const CreationFarm = ({ children }: CreationFarmI) => {
         />
         <SubmitButton
           label="Next"
-          formId="creationFarmForm"
+          formId="solarPanelsConfiguration"
           sx={{ width: "15%", py: 1 }}
         />
       </Grid>

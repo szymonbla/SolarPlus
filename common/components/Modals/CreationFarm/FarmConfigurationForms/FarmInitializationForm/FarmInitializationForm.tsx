@@ -3,7 +3,7 @@ import { Grid, Typography } from "@mui/material";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { configureNewFarm, selectState } from "redux/reducers";
+import { configureNewFarm, selectFarmState, nextStep } from "redux/reducers";
 
 import {
   FarmConfigurationData,
@@ -19,7 +19,7 @@ export const FarmInitializationForm = ({
   formId,
 }: FarmInitializationFormProps) => {
   const dispatch = useAppDispatch();
-  const actualState = useAppSelector(selectState);
+  const actualState = useAppSelector(selectFarmState);
 
   const formMethods = useForm<FarmConfigurationData>({
     mode: "onChange",
@@ -44,6 +44,7 @@ export const FarmInitializationForm = ({
           },
         })
       );
+      dispatch(nextStep());
     },
     [actualState, dispatch]
   );

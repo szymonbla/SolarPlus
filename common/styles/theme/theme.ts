@@ -40,7 +40,7 @@ export const theme = createTheme({
       main: "#FD79A1",
     },
     text: {
-      primary: "#FFFFFF",
+      primary: "#161618",
     },
     grey: {
       800: "#454749",

@@ -1,16 +1,26 @@
 import { Grid, Typography } from "@mui/material";
-import { useAppDispatch } from "redux/hooks";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { closeModal } from "redux/reducers";
 
 import { GlobalModal } from "common/components/Modals/GlobalModal";
 import { CancelButton, SubmitButton } from "common/components/Form";
 import { creationFormResolver } from "./FarmConfigurationForms/formResolver";
+import { nextStep, selectProgressBarStepOrder } from "redux/reducers";
+import { ProgressBar } from "common/components";
+import { farmProgressBar } from "common/constants";
+import { selectFarmState } from "redux/reducers";
 
 export const CreationFarm = () => {
+  const step = useAppSelector(selectProgressBarStepOrder);
+  const farmConfiguration = useAppSelector(selectFarmState);
   const dispatch = useAppDispatch();
 
   const closeCreationModal = () => {
     dispatch(closeModal());
+  };
+
+  const handleSubmit = () => {
+    console.log("Submit", farmConfiguration);
   };
 
   return (
@@ -18,6 +28,7 @@ export const CreationFarm = () => {
       <Typography variant="h3" fontWeight="700" sx={{ color: "common.black" }}>
         Create farm
       </Typography>
+      <ProgressBar activeStep={step} steps={farmProgressBar} />
       <Grid
         display="flex"
         justifyContent="center"
@@ -25,10 +36,10 @@ export const CreationFarm = () => {
         sx={{
           maxWidth: 650,
           margin: "auto",
-          height: `calc(100% - ${75}px)`,
+          height: `calc(100% - ${220}px)`,
         }}
       >
-        {creationFormResolver(1, "solarPanelsConfiguration")}
+        {creationFormResolver(step, "solarPanelsConfiguration")}
       </Grid>
       <Grid
         display="flex"
@@ -53,7 +64,7 @@ export const CreationFarm = () => {
           sx={{ width: "20%" }}
         />
         <SubmitButton
-          label="Next"
+          label={farmProgressBar.length - 1 === step ? "Submit" : "Next"}
           formId="solarPanelsConfiguration"
           sx={{ width: "15%", py: 1 }}
         />

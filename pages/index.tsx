@@ -37,8 +37,10 @@ const LoginPage = () => {
           },
         }}
       >
-        <Typography variant="h1">Login</Typography>
-        <Typography variant="h3">
+        <Typography variant="h1" color="common.white">
+          Login
+        </Typography>
+        <Typography variant="h3" color="common.white">
           Compare and visualise your solar farm
         </Typography>
         <Grid sx={{ width: "60%" }}>

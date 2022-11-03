@@ -46,7 +46,6 @@ export const FormInputField = ({ label, name, type, sx }: FormInputProps) => {
           value={value}
           inputRef={ref}
           sx={{
-            color: "common.black",
             border: "2px solid",
             borderColor: "grey.300",
             borderRadius: 2,

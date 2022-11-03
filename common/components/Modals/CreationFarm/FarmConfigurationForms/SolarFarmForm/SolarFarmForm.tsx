@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { configureNewFarm, selectState } from "redux/reducers";
+import { configureNewFarm, nextStep, selectFarmState } from "redux/reducers";
 
 import { FormInputField } from "common/components/Form";
 import {
@@ -17,7 +17,7 @@ interface SolarFarmFormProps {
 
 export const SolarFarmForm = ({ formId }: SolarFarmFormProps) => {
   const dispatch = useAppDispatch();
-  const actualState = useAppSelector(selectState);
+  const actualState = useAppSelector(selectFarmState);
 
   const formMethods = useForm<SolarPanelConfigurationData>({
     mode: "onChange",
@@ -31,7 +31,7 @@ export const SolarFarmForm = ({ formId }: SolarFarmFormProps) => {
 
   const handleSubmit = useCallback(
     ({ loss, peakPower }: SolarPanelConfigurationData) => {
-      return dispatch(
+      dispatch(
         configureNewFarm({
           ...actualState,
           pvPanel: {
@@ -40,6 +40,7 @@ export const SolarFarmForm = ({ formId }: SolarFarmFormProps) => {
           },
         })
       );
+      dispatch(nextStep());
     },
     [actualState, dispatch]
   );

@@ -14,20 +14,15 @@ export const CancelButton = ({ label, handleClick, sx }: CancelButtonProps) => {
       type="button"
       onClick={handleClick}
       startIcon={
-        <Image
-          src={TrashIcon}
-          width={24}
-          height={24}
-          alt="Trash icon"
-        />
+        <Image src={TrashIcon} width={24} height={24} alt="Trash icon" />
       }
       sx={{
         backgroundColor: "#E9EAEC",
         width: "100%",
         typography: "body1",
         fontWeight: "600",
-        color: "common.black",
         borderRadius: 2,
+        color: "common.black",
         "&:hover": {
           backgroundColor: "#E9EAEC",
         },

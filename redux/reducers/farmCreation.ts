@@ -41,7 +41,7 @@ const farmCreationSlice = createSlice({
 });
 
 const { actions, reducer } = farmCreationSlice;
-export const selectState = (state: RootState) => state.farm;
+export const selectFarmState = (state: RootState) => state.farm;
 
 export const { configureNewFarm } = actions;
 export default reducer;

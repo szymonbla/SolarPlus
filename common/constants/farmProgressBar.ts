@@ -1,16 +1,16 @@
-import { StepType } from "types";
+import { StepLabel, StepType, StepLabelDisplayName } from "types";
 
 export const farmProgressBar: StepType[] = [
   {
-    id: 0,
-    label: "Farm initialization",
+    id: StepLabel.FarmInitialization,
+    label: StepLabelDisplayName[StepLabel.FarmInitialization],
   },
   {
-    id: 1,
-    label: "Set up solar panel",
+    id: StepLabel.SetUpSolarPanel,
+    label: StepLabelDisplayName[StepLabel.SetUpSolarPanel],
   },
   {
-    id: 2,
-    label: "Summary",
+    id: StepLabel.Summary,
+    label: StepLabelDisplayName[StepLabel.Summary],
   },
 ];

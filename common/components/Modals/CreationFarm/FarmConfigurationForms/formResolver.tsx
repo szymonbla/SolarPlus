@@ -1,5 +1,6 @@
 import { SolarFarmForm } from "./SolarFarmForm";
 import { FarmInitializationForm } from "./FarmInitializationForm";
+import { SummaryPanel } from "./SummaryPanel";
 
 export const creationFormResolver = (
   formStep: number,
@@ -11,6 +12,9 @@ export const creationFormResolver = (
     }
     case 1: {
       return <SolarFarmForm formId={formId} />;
+    }
+    case 2: {
+      return <SummaryPanel formId={formId} />;
     }
 
     default: {

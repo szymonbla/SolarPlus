@@ -16,6 +16,9 @@ const progressBarStatus = createSlice({
     nextStep: (state) => {
       state.stepOrder += 1;
     },
+    reset: (state) => {
+      state.stepOrder = 0;
+    },
   },
 });
 
@@ -23,5 +26,5 @@ const { actions, reducer } = progressBarStatus;
 export const selectProgressBarStepOrder = (state: RootState) =>
   state.progressBarStatus.stepOrder;
 
-export const { nextStep } = actions;
+export const { nextStep, reset } = actions;
 export default reducer;

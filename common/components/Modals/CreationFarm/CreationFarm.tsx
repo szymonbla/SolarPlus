@@ -1,14 +1,17 @@
 import { Grid, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { closeModal } from "redux/reducers";
-
 import { GlobalModal } from "common/components/Modals/GlobalModal";
 import { CancelButton, SubmitButton } from "common/components/Form";
 import { creationFormResolver } from "./FarmConfigurationForms/formResolver";
-import { nextStep, selectProgressBarStepOrder } from "redux/reducers";
 import { ProgressBar } from "common/components";
 import { farmProgressBar } from "common/constants";
-import { selectFarmState } from "redux/reducers";
+import {
+  selectFarmState,
+  selectProgressBarStepOrder,
+  closeModal,
+  reset,
+  resetConfigurationFarm,
+} from "redux/reducers";
 
 export const CreationFarm = () => {
   const step = useAppSelector(selectProgressBarStepOrder);
@@ -17,6 +20,8 @@ export const CreationFarm = () => {
 
   const closeCreationModal = () => {
     dispatch(closeModal());
+    dispatch(reset());
+    dispatch(resetConfigurationFarm());
   };
 
   const handleSubmit = () => {

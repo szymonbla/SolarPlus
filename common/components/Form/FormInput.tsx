@@ -6,17 +6,17 @@ import {
   InputLabel,
   SxProps,
 } from "@mui/material";
-import { useEffect } from "react";
 import { useController } from "react-hook-form";
 
 interface FormInputProps {
   label: string;
   name: string;
   type: React.HTMLInputTypeAttribute;
+  readOnly?: boolean;
   sx?: SxProps;
 }
 
-export const FormInputField = ({ label, name, type, sx }: FormInputProps) => {
+export const FormInputField = ({ label, name, type, readOnly, sx }: FormInputProps) => {
   const {
     field: { ref, value, ...fieldProps },
     fieldState: { error },
@@ -41,6 +41,7 @@ export const FormInputField = ({ label, name, type, sx }: FormInputProps) => {
         <Input
           {...fieldProps}
           disableUnderline
+          readOnly={readOnly}
           type={type}
           name={name}
           value={value}

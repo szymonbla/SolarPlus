@@ -37,11 +37,24 @@ const farmCreationSlice = createSlice({
         },
       };
     },
+    resetConfigurationFarm: ({ farmName, location, pvPanel }) => {
+      return {
+        farmName: initialState.farmName,
+        location: {
+          latitude: initialState.location?.latitude,
+          longitude: initialState.location?.longitude,
+        },
+        pvPanel: {
+          loss: initialState.pvPanel?.loss,
+          peakPower: initialState.pvPanel?.peakPower,
+        },
+      };
+    },
   },
 });
 
 const { actions, reducer } = farmCreationSlice;
 export const selectFarmState = (state: RootState) => state.farm;
 
-export const { configureNewFarm } = actions;
+export const { configureNewFarm, resetConfigurationFarm } = actions;
 export default reducer;

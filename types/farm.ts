@@ -1,12 +1,12 @@
 export interface FarmModelI {
-  id: string;
   farmName: string;
   location: Partial<LocationCoordinates>;
   pvPanel: Partial<PvPanelAttributes>;
 }
 
 export type FarmBodyModel = {
-  name: string;
+  id: number;
+  farmName: string;
   location: LocationCoordinates;
   pvPanel: PvPanelAttributes;
 };

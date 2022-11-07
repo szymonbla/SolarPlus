@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "redux/store";
 import { FarmModelI } from "types";
 
-const initialState: Partial<FarmModelI> = {
+const initialState: FarmModelI = {
   farmName: "",
   location: {
     latitude: "",
@@ -26,7 +26,7 @@ const farmCreationSlice = createSlice({
     ) => {
       return {
         ...state,
-        farmName,
+        farmName: farmName ?? "",
         location: {
           latitude: location?.latitude,
           longitude: location?.longitude,
@@ -37,7 +37,7 @@ const farmCreationSlice = createSlice({
         },
       };
     },
-    resetConfigurationFarm: ({ farmName, location, pvPanel }) => {
+    resetConfigurationFarm: () => {
       return {
         farmName: initialState.farmName,
         location: {

@@ -12,11 +12,13 @@ import {
   reset,
   resetConfigurationFarm,
 } from "redux/reducers";
+import { useCreateFarmMutation } from "redux/api/farm";
 
 export const CreationFarm = () => {
   const step = useAppSelector(selectProgressBarStepOrder);
   const farmConfiguration = useAppSelector(selectFarmState);
   const dispatch = useAppDispatch();
+  const [createNewFarm] = useCreateFarmMutation();
 
   const closeCreationModal = () => {
     dispatch(closeModal());
@@ -24,8 +26,9 @@ export const CreationFarm = () => {
     dispatch(resetConfigurationFarm());
   };
 
-  const handleSubmit = () => {
-    console.log("Submit", farmConfiguration);
+  const handleSubmit = async () => {
+    await createNewFarm(farmConfiguration);
+    closeCreationModal();
   };
 
   return (
@@ -68,11 +71,19 @@ export const CreationFarm = () => {
           label="Remove"
           sx={{ width: "20%" }}
         />
-        <SubmitButton
-          label={farmProgressBar.length - 1 === step ? "Submit" : "Next"}
-          formId="solarPanelsConfiguration"
-          sx={{ width: "15%", py: 1 }}
-        />
+        {farmProgressBar.length - 1 !== step ? (
+          <SubmitButton
+            label="Next"
+            formId="solarPanelsConfiguration"
+            sx={{ width: "15%", py: 1 }}
+          />
+        ) : (
+          <SubmitButton
+            label="Submit"
+            handleClick={handleSubmit}
+            sx={{ width: "15%", py: 1 }}
+          />
+        )}
       </Grid>
     </GlobalModal>
   );

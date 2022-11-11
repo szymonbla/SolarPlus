@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next/types";
-import { FarmBodyModel } from "types";
+import { FarmModelI } from "types";
 
 export default async function handler(
   req: NextApiRequest,
@@ -18,12 +18,12 @@ export default async function handler(
 }
 
 async function createFarm(req: NextApiRequest, res: NextApiResponse) {
-  const body = req.body as FarmBodyModel;
+  const body = req.body as FarmModelI;
 
   try {
     await prisma?.farm.create({
       data: {
-        farmName: body.name,
+        farmName: body.farmName,
         location: {
           create: {
             latitude: body.location.latitude,

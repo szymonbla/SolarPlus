@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "redux/store";
 import { FarmModelI } from "types";
 
-const initialState: Partial<FarmModelI> = {
+const initialState: FarmModelI = {
   farmName: "",
   location: {
     latitude: "",
@@ -20,13 +20,11 @@ const farmCreationSlice = createSlice({
   reducers: {
     configureNewFarm: (
       state,
-      {
-        payload: { farmName, location, pvPanel },
-      }: PayloadAction<Partial<FarmModelI>>
+      { payload: { farmName, location, pvPanel } }: PayloadAction<FarmModelI>
     ) => {
       return {
         ...state,
-        farmName,
+        farmName: farmName,
         location: {
           latitude: location?.latitude,
           longitude: location?.longitude,
@@ -37,7 +35,7 @@ const farmCreationSlice = createSlice({
         },
       };
     },
-    resetConfigurationFarm: ({ farmName, location, pvPanel }) => {
+    resetConfigurationFarm: () => {
       return {
         farmName: initialState.farmName,
         location: {

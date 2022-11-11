@@ -20,13 +20,11 @@ const farmCreationSlice = createSlice({
   reducers: {
     configureNewFarm: (
       state,
-      {
-        payload: { farmName, location, pvPanel },
-      }: PayloadAction<Partial<FarmModelI>>
+      { payload: { farmName, location, pvPanel } }: PayloadAction<FarmModelI>
     ) => {
       return {
         ...state,
-        farmName: farmName ?? "",
+        farmName: farmName,
         location: {
           latitude: location?.latitude,
           longitude: location?.longitude,

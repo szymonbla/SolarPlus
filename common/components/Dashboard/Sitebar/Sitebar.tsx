@@ -1,13 +1,13 @@
-import { Divider, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 
-import { SubmitButton, Profile } from "common/components";
-import { FarmItem } from "common/components/FarmItem";
+import { Profile } from "common/components";
 import { ButtonWithIcon, CallToActionButton } from "common/components/Shared";
 import { useEffect } from "react";
-import { useCreateFarmMutation, useGetAllFarmsQuery } from "redux/api/v1/farm";
+import { useGetAllFarmsQuery } from "redux/api/v1/farm";
 import { useAppDispatch } from "redux/hooks";
 import { openModal } from "redux/reducers";
 import SignOutIcon from "common/images/logout.svg";
+import { Navigation } from "common/components/Navigation";
 interface SitebarProps {
   handleClick: () => void;
 }
@@ -30,29 +30,22 @@ export const Sitebar = ({ handleClick }: SitebarProps) => {
       display="flex"
       flexDirection="column"
       alignItems="center"
+      justifyContent="space-between"
       sx={{
         width: "20%",
         height: "100%",
+        py: "2rem",
         backgroundColor: "background.default",
       }}
     >
-      <Grid
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        sx={{ mb: "1rem" }}
-      >
-        <Profile />
-      </Grid>
-      <CallToActionButton
+      <Profile />
+      {/* <CallToActionButton
         handleClick={openCreationFarmModal}
         label="Create farm"
         type="button"
         sx={{ width: "50%", my: "2rem" }}
-      />
-      <FarmItem label={"opps"} />
-
+      /> */}
+      <Navigation />
       <ButtonWithIcon
         handleClick={handleClick}
         label="Sign out"

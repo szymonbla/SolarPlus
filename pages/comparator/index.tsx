@@ -4,7 +4,7 @@ import { WelcomePageLayout } from "layouts";
 const DashboardPage = () => {
   return (
     <WelcomePageLayout>
-      <Typography>Dashboard</Typography>
+      <Typography>Soon</Typography>
     </WelcomePageLayout>
   );
 };

@@ -4,7 +4,7 @@ import { createEmotionCache, theme } from "common/styles/theme";
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="pl">
+      <Html lang="en">
         <Head>
           <meta name="theme-color" content={theme.palette.background.default} />
           <link rel="shortcut icon" href="/favicons/favicon.ico" />

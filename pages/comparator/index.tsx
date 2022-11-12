@@ -1,10 +1,10 @@
-import { DashboardComponent } from "common/components";
+import { ComparatorComponent } from "common/components";
 import { WelcomePageLayout } from "layouts";
 
 const DashboardPage = () => {
   return (
     <WelcomePageLayout>
-      <DashboardComponent />
+      <ComparatorComponent />
     </WelcomePageLayout>
   );
 };

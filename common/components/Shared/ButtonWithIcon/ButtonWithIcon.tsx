@@ -1,11 +1,12 @@
 import Image from "next/image";
-import { Button } from "@mui/material";
+import { Button, SxProps } from "@mui/material";
 
 interface ButtonWithIcon {
   label: string;
   handleClick: () => void;
   isStartIcon?: boolean;
   icon: string;
+  sx?: SxProps;
 }
 
 export const ButtonWithIcon = ({
@@ -13,6 +14,7 @@ export const ButtonWithIcon = ({
   icon,
   label,
   isStartIcon,
+  sx,
 }: ButtonWithIcon) => {
   return (
     <Button
@@ -23,7 +25,7 @@ export const ButtonWithIcon = ({
       endIcon={
         !isStartIcon && <Image src={icon} width={24} height={24} alt="icon" />
       }
-      sx={{ color: "common.white", typography: "subtitle2" }}
+      sx={{ color: "common.white", typography: "subtitle2", ...sx }}
     >
       {label}
     </Button>

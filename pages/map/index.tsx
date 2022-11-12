@@ -1,14 +1,13 @@
 import dynamic from "next/dynamic";
-import { Grid } from "@mui/material";
 
 import { WelcomePageLayout } from "layouts";
 import { LoadingSpinner } from "common/components";
 
 const MapComponent = dynamic(
   () =>
-    import("common/components/Dashboard/MapComponent/MapComponent").then(
-      (item) => item.MapComponent
-    ),
+    import(
+      "common/components/WelcomeComponents/MapComponent/MapComponent"
+    ).then((item) => item.MapComponent),
   { ssr: false, loading: () => <LoadingSpinner /> }
 );
 

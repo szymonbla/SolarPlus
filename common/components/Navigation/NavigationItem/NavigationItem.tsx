@@ -1,8 +1,10 @@
-import { Grid, SxProps } from "@mui/material";
+import { CSSProperties } from "react";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import styled from "@emotion/styled";
-import { CSSProperties, useState } from "react";
+import { Grid } from "@mui/material";
 
 export interface NavigationItemProps {
   label: string;
@@ -15,24 +17,19 @@ export const NavigationItem = ({
   hrefLink,
   icon,
 }: NavigationItemProps) => {
-  const [isActiveState, setActiveState] = useState<boolean>(false);
+  const router = useRouter();
+  const isActive = router.pathname === hrefLink;
 
   return (
-    <Grid
-      display="flex"
-      justifyContent="center"
-      alignItems="flex-start"
-      gap={2}
-      onClick={() => setActiveState(true)}
-    >
+    <Grid display="flex" alignItems="center" gap={2}>
       <Image
         src={icon}
-        width={32}
-        height={32}
+        width={isActive ? 40 : 32}
+        height={isActive ? 40 : 32}
         alt={`${label.toLowerCase()} icon`}
       />
       <Link href={hrefLink} passHref>
-        <StyledLink style={linkStyling(isActiveState)}>{label}</StyledLink>
+        <StyledLink style={linkStyling(isActive)}>{label}</StyledLink>
       </Link>
     </Grid>
   );

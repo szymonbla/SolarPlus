@@ -1,10 +1,10 @@
-import { Typography } from "@mui/material";
+import { DashboardComponent } from "common/components";
 import { WelcomePageLayout } from "layouts";
 
 const DashboardPage = () => {
   return (
     <WelcomePageLayout>
-      <Typography>Dashboard</Typography>
+      <DashboardComponent />
     </WelcomePageLayout>
   );
 };

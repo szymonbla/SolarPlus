@@ -1,12 +1,10 @@
 import { Grid } from "@mui/material";
-import { ButtonWithIcon } from "common/components/Shared";
+
 import { RoutesDefinition } from "common/routes";
-import { NavigationItem, NavigationItemProps } from "./NavigationItem";
 import MapIcon from "common/images/map.svg";
 import DashboardIcon from "common/images/dashboard.svg";
 import ComparatorIcon from "common/images/comparator.svg";
-import { boolean } from "zod";
-import { useState } from "react";
+import { NavigationItem, NavigationItemProps } from "./NavigationItem";
 
 export const Navigation = () => {
   const navigationItems: NavigationItemProps[] = [
@@ -37,12 +35,7 @@ export const Navigation = () => {
       component="nav"
     >
       {navigationItems.map((item, index) => (
-        <NavigationItem
-          hrefLink={item.hrefLink}
-          icon={item.icon}
-          label={item.label}
-          key={index}
-        />
+        <NavigationItem {...item} key={index} />
       ))}
     </Grid>
   );

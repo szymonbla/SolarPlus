@@ -4,7 +4,7 @@ import { baseQuery } from "./config";
 
 export const farmApi = createApi({
   baseQuery,
-  reducerPath: "farm",
+  reducerPath: "farmApi",
   endpoints: (builder) => ({
     createFarm: builder.mutation<void, FarmModelI>({
       query: (body) => ({
@@ -16,7 +16,10 @@ export const farmApi = createApi({
         body,
       }),
     }),
+    getAllFarms: builder.query<FarmModelI[], string>({
+      query: () => ({ url: "farm" }),
+    }),
   }),
 });
 
-export const { useCreateFarmMutation } = farmApi;
+export const { useCreateFarmMutation, useGetAllFarmsQuery } = farmApi;

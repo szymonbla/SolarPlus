@@ -20,10 +20,14 @@ export const Profile = () => {
         sx={{
           width: 70,
           height: 70,
-          mb: "1rem",
+          mb: "0.5rem",
+          mt: "4rem",
         }}
       />
-      <Typography variant="h4" fontWeight="600">
+      <Typography variant="subtitle2" fontWeight="600" color="grey.400">
+        Welcome back,
+      </Typography>
+      <Typography variant="h4" fontWeight="600" color="common.white">
         {session?.user?.name}
       </Typography>
     </Grid>

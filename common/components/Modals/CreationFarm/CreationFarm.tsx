@@ -12,7 +12,7 @@ import {
   reset,
   resetConfigurationFarm,
 } from "redux/reducers";
-import { useCreateFarmMutation } from "redux/api/farm";
+import { useCreateFarmMutation } from "redux/api/v1/farm";
 
 export const CreationFarm = () => {
   const step = useAppSelector(selectProgressBarStepOrder);

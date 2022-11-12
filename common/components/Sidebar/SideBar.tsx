@@ -5,11 +5,11 @@ import { ButtonWithIcon } from "common/components/Shared";
 import SignOutIcon from "common/images/logout.svg";
 import { Navigation } from "common/components/Navigation";
 
-interface SitebarProps {
+interface SideBarProps {
   handleClick: () => void;
 }
 
-export const Sitebar = ({ handleClick }: SitebarProps) => {
+export const SideBar = ({ handleClick }: SideBarProps) => {
   return (
     <Grid
       display="flex"

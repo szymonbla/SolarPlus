@@ -10,7 +10,7 @@ datasource db {
 }
 
 model Account {
-  id                String  @id @default(cuid())
+  id                String  @id @default(uuid())
   userId            String
   type              String
   provider          String
@@ -28,7 +28,7 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
+  id           String   @id @default(uuid())
   sessionToken String   @unique
   userId       String
   expires      DateTime
@@ -36,7 +36,7 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String    @id @default(uuid())
   name          String?
   email         String?   @unique
   emailVerified DateTime?
@@ -54,24 +54,25 @@ model VerificationToken {
 }
 
 model LocationCoordinates {
-  id        String @id @default(cuid())
+  id        String @id @default(uuid())
   latitude  String
   longitude String
   Farm      Farm[]
 }
 
 model PvPanel {
-  id        String @id @default(cuid())
+  id        String @id @default(uuid())
   peakPower Int
   loss      Int
   Farm      Farm[]
 }
 
 model Farm {
-  id                    String              @id @default(cuid())
+  id                    String              @id @default(uuid())
   farmName              String              @unique
   location              LocationCoordinates @relation(fields: [locationCoordinatesId], references: [id])
   locationCoordinatesId String
   pvPanel               PvPanel             @relation(fields: [pvPanelId], references: [id])
   pvPanelId             String
+  created               DateTime            @default(now())
 }

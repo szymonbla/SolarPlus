@@ -1,17 +1,13 @@
-import { Grid, Typography } from "@mui/material";
 import { useEffect } from "react";
+import { Grid, Typography } from "@mui/material";
 import { useGetAllFarmsQuery } from "redux/api/v1/farm";
-import { DashboardItem, DashboardItemProps } from "./DashboardItem";
+
+import { DashboardTable } from "./DashboardTable";
 import SolarFarmIcon from "common/images/solarFarm.svg";
+import { DashboardItem, DashboardItemProps } from "./DashboardItem";
 
 export const DashboardComponent = () => {
   const { data, isSuccess } = useGetAllFarmsQuery("");
-
-  useEffect(() => {
-    if (isSuccess) {
-      console.log(data[0].farmName);
-    }
-  }, [data, isSuccess]);
 
   const dashboardItems: DashboardItemProps[] = [
     { icon: SolarFarmIcon, subtitle: "Amount of solar farms", value: "0" },
@@ -30,6 +26,7 @@ export const DashboardComponent = () => {
       display="flex"
       flexDirection="column"
       sx={{ height: "100%", p: "4rem" }}
+      gap={2}
     >
       <Typography variant="h3" fontWeight="600">
         Dashboard
@@ -39,6 +36,7 @@ export const DashboardComponent = () => {
           <DashboardItem {...item} key={index} />
         ))}
       </Grid>
+      <DashboardTable rows={isSuccess ? data : []} />
     </Grid>
   );
 };

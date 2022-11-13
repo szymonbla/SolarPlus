@@ -2,6 +2,7 @@ export interface FarmModelI {
   farmName: string;
   location: LocationCoordinates;
   pvPanel: PvPanelAttributes;
+  created?: Date;
 }
 
 export type LocationCoordinates = {

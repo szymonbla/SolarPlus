@@ -53,7 +53,9 @@ async function createFarm(req: NextApiRequest, res: NextApiResponse) {
 
 async function getAllFarms(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const allFarms = await prisma?.farm.findMany();
+    const allFarms = await prisma?.farm.findMany({
+      include: { location: true, pvPanel: true },
+    });
 
     return res.status(200).json(allFarms);
   } catch (error) {

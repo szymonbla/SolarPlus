@@ -3,8 +3,9 @@ import { FarmModelI } from "types";
 import { baseQuery } from "./config";
 
 export const farmApi = createApi({
-  baseQuery,
+  baseQuery: baseQuery,
   reducerPath: "farmApi",
+  tagTypes: ["Farm"],
   endpoints: (builder) => ({
     createFarm: builder.mutation<void, FarmModelI>({
       query: (body) => ({
@@ -15,11 +16,13 @@ export const farmApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["Farm"],
     }),
     getAllFarms: builder.query<FarmModelI[], string>({
       query: () => ({ url: "farm" }),
+      providesTags: ["Farm"],
     }),
   }),
 });
 
-export const { useCreateFarmMutation, useGetAllFarmsQuery } = farmApi;
+export const { useCreateFarmMutation, useLazyGetAllFarmsQuery } = farmApi;

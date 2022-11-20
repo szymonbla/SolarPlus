@@ -3,12 +3,14 @@ import modalReducer from "./reducers/modal";
 import farmReducer from "./reducers/farmCreation";
 import progressBarStatus from "./reducers/progressBarStatus";
 import { farmApi } from "./api/v1/farm";
+import { energyApi } from "./api/v1/energy";
 export const store = configureStore({
   reducer: {
     modal: modalReducer,
     farm: farmReducer,
     progressBarStatus: progressBarStatus,
     [farmApi.reducerPath]: farmApi.reducer,
+    [energyApi.reducerPath]: energyApi.reducer,
   },
   devTools: process.env.NODE_ENV !== "production" && true,
   middleware: (getDefaultMiddleware) =>

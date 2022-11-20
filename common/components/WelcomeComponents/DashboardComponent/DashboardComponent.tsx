@@ -10,13 +10,28 @@ import { FarmModelI } from "types";
 
 export const DashboardComponent = () => {
   const [allFarms, setAllFarms] = useState<FarmModelI[]>([]);
+  const [solarFarmsData, setSolarFarmsData] = useState<{ totalEnergy: number }>(
+    {
+      totalEnergy: 0,
+    }
+  );
   const [fetchSolarFarmsTrigger, { data }] = useLazyGetAllFarmsQuery();
-  const [requestData] = useLazyGetTotalEnergyQuery();
+  const [requestSolarFarmsDataTrigger] = useLazyGetTotalEnergyQuery();
 
   const fetchAllSolarFarms = useCallback(async () => {
     const response = await fetchSolarFarmsTrigger("");
     response.data && setAllFarms(response.data);
   }, [fetchSolarFarmsTrigger]);
+
+  const fetchSolarFarmsData = useCallback(async () => {
+    const response = await requestSolarFarmsDataTrigger("");
+    console.log(response);
+    response.data && setSolarFarmsData(response);
+  }, [requestSolarFarmsDataTrigger]);
+
+  useEffect(() => {
+    fetchSolarFarmsData();
+  }, [fetchSolarFarmsData]);
 
   useEffect(() => {
     fetchAllSolarFarms();

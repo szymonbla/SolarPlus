@@ -4,7 +4,7 @@ import moment from "moment";
 
 import { FarmModelI } from "types";
 import { columnGroupingModel, columns, DDMMYY } from "common/constants";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface DashboardTableProps {
   rows: FarmModelI[];

@@ -8,11 +8,7 @@ import { FarmModelI } from "types";
 import { baseQuery } from "./config";
 
 export const energyApi = createApi({
-  baseQuery: baseQuery as BaseQueryFn<
-    string | FetchArgs,
-    unknown,
-    FetchBaseQueryError
-  >,
+  baseQuery: baseQuery,
   reducerPath: "energyApi",
   endpoints: (builder) => ({
     getTotalEnergy: builder.query<void, any>({

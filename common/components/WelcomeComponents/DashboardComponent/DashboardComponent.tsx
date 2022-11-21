@@ -1,20 +1,31 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Grid, Typography } from "@mui/material";
-import { useGetAllFarmsQuery } from "redux/api/v1/farm";
+import { useLazyGetAllFarmsQuery } from "redux/api/v1/farm";
 
 import { DashboardTable } from "./DashboardTable";
 import SolarFarmIcon from "common/images/solarFarm.svg";
 import { DashboardItem, DashboardItemProps } from "./DashboardItem";
+import { FarmModelI } from "types";
 
 export const DashboardComponent = () => {
-  const { data, isSuccess } = useGetAllFarmsQuery("");
+  const [allFarms, setAllFarms] = useState<FarmModelI[]>([]);
+  const [fetchSolarFarmsTrigger, { data }] = useLazyGetAllFarmsQuery();
+
+  const fetchAllSolarFarms = useCallback(async () => {
+    const response = await fetchSolarFarmsTrigger("");
+    response.data && setAllFarms(response.data);
+  }, [fetchSolarFarmsTrigger]);
+
+  useEffect(() => {
+    fetchAllSolarFarms();
+  }, [fetchAllSolarFarms, data]);
 
   const dashboardItems: DashboardItemProps[] = [
     { icon: SolarFarmIcon, subtitle: "Amount of solar farms", value: "0" },
     {
       icon: SolarFarmIcon,
       subtitle: "Your solar farms",
-      value: data?.length ?? 0,
+      value: allFarms?.length ?? 0,
       isAddingAvailable: true,
     },
     { icon: SolarFarmIcon, subtitle: "Amount of solar farms", value: "0" },
@@ -36,7 +47,7 @@ export const DashboardComponent = () => {
           <DashboardItem {...item} key={index} />
         ))}
       </Grid>
-      <DashboardTable rows={isSuccess ? data : []} />
+      <DashboardTable rows={allFarms} />
     </Grid>
   );
 };

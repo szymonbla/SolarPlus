@@ -9,7 +9,7 @@ export default async function handler(
   if (req.method === "POST") {
     return await createFarm(req, res);
   } else if (req.method === "GET") {
-    return await getAllFarms(req, res);
+    return await getFarmById(req, res);
   } else {
     return res
       .status(405)
@@ -51,13 +51,16 @@ async function createFarm(req: NextApiRequest, res: NextApiResponse) {
   }
 }
 
-async function getAllFarms(req: NextApiRequest, res: NextApiResponse) {
+async function getFarmById(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const allFarms = await prisma?.farm.findMany({
+    const farmlooking = await prisma?.farm.findUnique({
+      where: {
+        id: Number(req.query),
+      },
       include: { location: true, pvPanel: true },
     });
 
-    return res.status(200).json(allFarms);
+    return res.status(200).json(farmlooking);
   } catch (error) {
     res.status(500).json({ message: "Something go wrong!", success: false });
   }

@@ -1,7 +1,7 @@
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Button, Grid, Typography } from "@mui/material";
 import { useLazyGetAllFarmsQuery } from "redux/api/v1/farm";
-import Link from "next/link";
 
 import { DashboardTable } from "./DashboardTable";
 import SolarFarmIcon from "common/images/solarFarm.svg";

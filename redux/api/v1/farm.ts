@@ -19,10 +19,17 @@ export const farmApi = createApi({
       invalidatesTags: ["Farm"],
     }),
     getAllFarms: builder.query<FarmModelI[], string>({
-      query: () => ({ url: "farm" }),
+      query: () => ({ url: "farms" }),
       providesTags: ["Farm"],
+    }),
+    getFarmById: builder.query<FarmModelI, number>({
+      query: (id) => ({ url: `farm/${id}` }),
     }),
   }),
 });
 
-export const { useCreateFarmMutation, useLazyGetAllFarmsQuery } = farmApi;
+export const {
+  useCreateFarmMutation,
+  useLazyGetAllFarmsQuery,
+  useLazyGetFarmByIdQuery,
+} = farmApi;

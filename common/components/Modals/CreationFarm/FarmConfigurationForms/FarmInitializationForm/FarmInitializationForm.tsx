@@ -3,7 +3,7 @@ import { Grid, Typography } from "@mui/material";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { configureNewFarm, selectFarmState, nextStep } from "redux/reducers";
+import { setFarmConfiguration, selectFarmState, nextStep } from "redux/reducers";
 
 import {
   FarmConfigurationData,
@@ -35,7 +35,7 @@ export const FarmInitializationForm = ({
   const handleSubmit = useCallback(
     ({ farmName, latitude, longitude }: FarmConfigurationData) => {
       dispatch(
-        configureNewFarm({
+        setFarmConfiguration({
           ...actualState,
           farmName,
           location: {

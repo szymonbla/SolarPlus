@@ -4,6 +4,7 @@ import Image from "next/image";
 import AddIcon from "common/images/addIcon.svg";
 import { useAppDispatch } from "redux/hooks";
 import { openModal } from "redux/reducers";
+import { DashboardTileLayout } from "common/components/Shared";
 
 export interface DashboardItemProps {
   icon: string;
@@ -24,20 +25,15 @@ export const DashboardItem = ({
     dispatch(openModal());
   };
   return (
-    <Grid
-      display="flex"
-      flexDirection="column"
-      justifyContent="flex-start"
-      alignItems="flex-start"
-      gap={2}
+    <DashboardTileLayout
       sx={{
-        position: "relative",
         height: 250,
         width: 300,
-        borderRadius: 3,
-        backgroundColor: "common.white",
-        p: "2rem",
-        boxShadow: "-3px 9px 11px 1px rgba(238, 238, 247, 1);",
+        gap: 2,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
       }}
     >
       <Image src={icon} width={50} height={50} alt="icon" />
@@ -60,6 +56,6 @@ export const DashboardItem = ({
       ) : (
         <Typography>Start from</Typography>
       )}
-    </Grid>
+    </DashboardTileLayout>
   );
 };

@@ -4,10 +4,12 @@ import moment from "moment";
 
 import { FarmModelI } from "types";
 import { columnGroupingModel, columns, DDMMYY } from "common/constants";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 interface DashboardTableProps {
   rows: FarmModelI[];
+  selectionModel: GridSelectionModel;
+  setSelectionModel: Dispatch<SetStateAction<GridSelectionModel>>;
 }
 
 function mapToTableGrid(farm: FarmModelI) {
@@ -21,9 +23,12 @@ function mapToTableGrid(farm: FarmModelI) {
   };
 }
 
-export const DashboardTable = ({ rows }: DashboardTableProps) => {
+export const DashboardTable = ({
+  rows,
+  selectionModel,
+  setSelectionModel,
+}: DashboardTableProps) => {
   const mappedFarms = rows.map(mapToTableGrid);
-  const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
 
   return (
     <Grid

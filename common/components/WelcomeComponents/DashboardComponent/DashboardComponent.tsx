@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { Grid, Typography } from "@mui/material";
 import { useLazyGetAllFarmsQuery } from "redux/api/v1/farm";
-import { useLazyGetTotalEnergyQuery } from "redux/api/v1/energy";
 
 import { DashboardTable } from "./DashboardTable";
 import SolarFarmIcon from "common/images/solarFarm.svg";
@@ -10,28 +9,12 @@ import { FarmModelI } from "types";
 
 export const DashboardComponent = () => {
   const [allFarms, setAllFarms] = useState<FarmModelI[]>([]);
-  const [solarFarmsData, setSolarFarmsData] = useState<{ totalEnergy: number }>(
-    {
-      totalEnergy: 0,
-    }
-  );
   const [fetchSolarFarmsTrigger, { data }] = useLazyGetAllFarmsQuery();
-  const [requestSolarFarmsDataTrigger] = useLazyGetTotalEnergyQuery();
 
   const fetchAllSolarFarms = useCallback(async () => {
     const response = await fetchSolarFarmsTrigger("");
     response.data && setAllFarms(response.data);
   }, [fetchSolarFarmsTrigger]);
-
-  const fetchSolarFarmsData = useCallback(async () => {
-    const response = await requestSolarFarmsDataTrigger("");
-    console.log(response);
-    response.data && setSolarFarmsData(response);
-  }, [requestSolarFarmsDataTrigger]);
-
-  useEffect(() => {
-    fetchSolarFarmsData();
-  }, [fetchSolarFarmsData]);
 
   useEffect(() => {
     fetchAllSolarFarms();

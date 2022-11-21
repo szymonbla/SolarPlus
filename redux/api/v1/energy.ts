@@ -1,10 +1,4 @@
-import {
-  BaseQueryFn,
-  createApi,
-  FetchArgs,
-  FetchBaseQueryError,
-} from "@reduxjs/toolkit/query/react";
-import { FarmModelI } from "types";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "./config";
 
 export const energyApi = createApi({

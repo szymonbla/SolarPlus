@@ -5,3 +5,4 @@ export * from "./Profile";
 export * from "./Modals";
 export * from "./ProgressBar";
 export * from "./Sidebar";
+export * from "./SingleSolarFarm";

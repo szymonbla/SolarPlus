@@ -1,3 +1,3 @@
 export * from "./modal";
-export * from "./farmCreation";
+export * from "./farm";
 export * from "./progressBarStatus";

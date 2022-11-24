@@ -1,4 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
+
+import { ProducedEnergy } from "types/farmEnergy";
 import { FarmModelI } from "types";
 import { baseQuery } from "./config";
 
@@ -19,10 +21,21 @@ export const farmApi = createApi({
       invalidatesTags: ["Farm"],
     }),
     getAllFarms: builder.query<FarmModelI[], string>({
-      query: () => ({ url: "farm" }),
+      query: () => ({ url: "farms" }),
       providesTags: ["Farm"],
+    }),
+    getFarmById: builder.query<FarmModelI, number>({
+      query: (id) => ({ url: `farm/${id}` }),
+    }),
+    getProducedEnergyByFarmId: builder.query<ProducedEnergy, number>({
+      query: (id) => ({ url: `farmEnergy/${id}` }),
     }),
   }),
 });
 
-export const { useCreateFarmMutation, useLazyGetAllFarmsQuery } = farmApi;
+export const {
+  useCreateFarmMutation,
+  useLazyGetAllFarmsQuery,
+  useLazyGetFarmByIdQuery,
+  useLazyGetProducedEnergyByFarmIdQuery,
+} = farmApi;

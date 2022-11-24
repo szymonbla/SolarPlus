@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { configureNewFarm, nextStep, selectFarmState } from "redux/reducers";
+import { setFarmConfiguration, nextStep, selectFarmState } from "redux/reducers";
 
 import { FormInputField } from "common/components/Form";
 import {
@@ -32,7 +32,7 @@ export const SolarFarmForm = ({ formId }: SolarFarmFormProps) => {
   const handleSubmit = useCallback(
     ({ loss, peakPower }: SolarPanelConfigurationData) => {
       dispatch(
-        configureNewFarm({
+        setFarmConfiguration({
           ...actualState,
           pvPanel: {
             loss: Number(loss),

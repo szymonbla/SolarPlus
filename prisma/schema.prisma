@@ -68,7 +68,7 @@ model PvPanel {
 }
 
 model Farm {
-  id                    String              @id @default(uuid())
+  id                    Int                 @id @default(autoincrement())
   farmName              String              @unique
   location              LocationCoordinates @relation(fields: [locationCoordinatesId], references: [id])
   locationCoordinatesId String

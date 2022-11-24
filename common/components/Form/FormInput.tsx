@@ -12,11 +12,19 @@ interface FormInputProps {
   label: string;
   name: string;
   type: React.HTMLInputTypeAttribute;
+  valueInReadOnly?: string | number;
   readOnly?: boolean;
   sx?: SxProps;
 }
 
-export const FormInputField = ({ label, name, type, readOnly, sx }: FormInputProps) => {
+export const FormInputField = ({
+  label,
+  name,
+  type,
+  valueInReadOnly,
+  readOnly,
+  sx,
+}: FormInputProps) => {
   const {
     field: { ref, value, ...fieldProps },
     fieldState: { error },
@@ -44,11 +52,12 @@ export const FormInputField = ({ label, name, type, readOnly, sx }: FormInputPro
           readOnly={readOnly}
           type={type}
           name={name}
-          value={value}
+          defaultValue={!readOnly ? valueInReadOnly : value}
+          value={readOnly ? valueInReadOnly : value}
           inputRef={ref}
           sx={{
             border: "2px solid",
-            borderColor: "grey.300",
+            borderColor: readOnly ? "common.white" : "grey.300",
             borderRadius: 2,
             px: 1.5,
             py: 1,

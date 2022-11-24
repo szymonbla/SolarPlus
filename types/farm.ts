@@ -1,3 +1,8 @@
+import { z } from "zod";
+import {
+  farmConfigurationSchema,
+  solarPanelConfigurationSchema,
+} from "common/components/Modals/types";
 export interface FarmModelI {
   farmName: string;
   location: LocationCoordinates;
@@ -14,3 +19,9 @@ export type PvPanelAttributes = {
   peakPower: number;
   loss: number;
 };
+
+export const mainFarmConfiguration = farmConfigurationSchema.merge(
+  solarPanelConfigurationSchema
+);
+
+export type MainFarmConfigurationData = z.infer<typeof mainFarmConfiguration>;

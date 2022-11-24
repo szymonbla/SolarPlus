@@ -8,8 +8,6 @@ export default async function handler(
 ) {
   if (req.method === "POST") {
     return await createFarm(req, res);
-  } else if (req.method === "GET") {
-    return await getAllFarms(req, res);
   } else {
     return res
       .status(405)
@@ -48,17 +46,5 @@ async function createFarm(req: NextApiRequest, res: NextApiResponse) {
       .json({ message: "Farm created successfully!", success: true });
   } catch (error) {
     res.status(500).json({ message: error, success: false });
-  }
-}
-
-async function getAllFarms(req: NextApiRequest, res: NextApiResponse) {
-  try {
-    const allFarms = await prisma?.farm.findMany({
-      include: { location: true, pvPanel: true },
-    });
-
-    return res.status(200).json(allFarms);
-  } catch (error) {
-    res.status(500).json({ message: "Something go wrong!", success: false });
   }
 }

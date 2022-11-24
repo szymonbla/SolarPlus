@@ -18,7 +18,7 @@ const farmCreationSlice = createSlice({
   name: "farm",
   initialState,
   reducers: {
-    configureNewFarm: (
+    setFarmConfiguration: (
       state,
       { payload: { farmName, location, pvPanel } }: PayloadAction<FarmModelI>
     ) => {
@@ -54,5 +54,5 @@ const farmCreationSlice = createSlice({
 const { actions, reducer } = farmCreationSlice;
 export const selectFarmState = (state: RootState) => state.farm;
 
-export const { configureNewFarm, resetConfigurationFarm } = actions;
+export const { setFarmConfiguration, resetConfigurationFarm } = actions;
 export default reducer;

@@ -15,10 +15,10 @@ export default async function handler(
 
 async function getFarmById(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const id = req.query && Number(req.query.id);
+    const id = req.query && Number(req.query.farmId);
     const farmlooking = await prisma?.farm.findUnique({
       where: {
-        id: id,
+        id: id as number,
       },
       include: { location: true, pvPanel: true },
     });

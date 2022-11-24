@@ -15,7 +15,6 @@ export default async function handler(
       .json({ message: "Method not allowed", status: false });
   }
 }
-
 async function getProducedEnergyByFarmId(
   req: NextApiRequest,
   res: NextApiResponse
@@ -25,7 +24,7 @@ async function getProducedEnergyByFarmId(
 
     const farmlooking = await prisma?.farm.findUnique({
       where: {
-        id,
+        id: id,
       },
       include: { location: true, pvPanel: true },
     });

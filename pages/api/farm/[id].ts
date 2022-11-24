@@ -18,7 +18,7 @@ async function getFarmById(req: NextApiRequest, res: NextApiResponse) {
     const id = req.query && Number(req.query.id);
     const farmlooking = await prisma?.farm.findUnique({
       where: {
-        id,
+        id: id,
       },
       include: { location: true, pvPanel: true },
     });

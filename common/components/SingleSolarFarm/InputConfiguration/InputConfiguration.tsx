@@ -27,12 +27,8 @@ export const InputConfiguration = ({
     reValidateMode: "onChange",
   });
 
-  useEffect(() => {
-    console.log(farmAttributes);
-  }, [farmAttributes]);
-
   return (
-    <DashboardTileLayout>
+    <DashboardTileLayout sx={{ flex: 1 }}>
       <FormProvider {...formMethods}>
         <form>
           <Grid>

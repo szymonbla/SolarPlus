@@ -37,6 +37,9 @@ interface InputsType {
 }
 
 interface OutputsType {
+  monthly: {
+    fixed: MonthlyProducedEnergy[];
+  };
   totals: {
     fixed: {
       E_d: number; // Average daily PV production for fixed mounting system
@@ -55,8 +58,22 @@ interface OutputsType {
   };
 }
 
+interface MonthlyProducedEnergy {
+  month: number;
+  E_d: number;
+  E_m: number;
+  "H(i)_d": number;
+  "H(i)_m": number;
+  SD_m: number;
+}
+
+export interface EnergyType {
+  pVEnergyProductionKWH: number;
+  inPlaneIrradiationKWM2: number;
+  variabilityKWH: number;
+}
+
 export interface ProducedEnergy {
-  yearlyPVEnergyProductionKWH: number;
-  yearlyInPlaneIrradiationKWM2: number;
-  yearToYearVariabilityKWH: number;
+  yearly: EnergyType;
+  monthly: EnergyType[];
 }

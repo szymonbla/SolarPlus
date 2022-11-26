@@ -10,13 +10,23 @@ import { InputConfiguration } from "./InputConfiguration";
 import { selectFarmState, setFarmConfiguration } from "redux/reducers";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { OutputSolarFarm } from "./OutputSolarFarm";
-import { ProducedEnergy } from "types/farmEnergy";
+import { EnergyType, ProducedEnergy } from "types/farmEnergy";
+import { SolarFarmChart } from "./SolarFarmChart";
+import { monthsLabels } from "common/constants";
+import { FarmModelI } from "types";
+
+function mapToPVEnergyProduction(data: EnergyType): number {
+  return data.pVEnergyProductionKWH;
+}
 
 export const SingleSolarFarm = () => {
   const [state, setState] = useState<ProducedEnergy>({
-    yearlyInPlaneIrradiationKWM2: 0,
-    yearlyPVEnergyProductionKWH: 0,
-    yearToYearVariabilityKWH: 0,
+    yearly: {
+      inPlaneIrradiationKWM2: 0,
+      pVEnergyProductionKWH: 0,
+      variabilityKWH: 0,
+    },
+    monthly: [],
   });
   const farmAttributes = useAppSelector(selectFarmState);
   const dispatch = useAppDispatch();
@@ -37,18 +47,14 @@ export const SingleSolarFarm = () => {
     }
   }, [fetchProducedEnergyByFarmTrigger, isReady, query]);
 
-  const fetchFarmById = useCallback(async () => {
-    const { farmId } = query;
-    if (!isReady) {
-      return;
-    }
-    const response = await fetchFarmByIdTrigger(Number(farmId));
-    if (response.data) {
+  const dispatchFarmConfiguration = useCallback(
+    (farmConfiguration: FarmModelI) => {
       const {
         farmName,
         location: { latitude, longitude },
         pvPanel: { loss, peakPower },
-      } = response.data;
+      } = farmConfiguration;
+
       dispatch(
         setFarmConfiguration({
           farmName,
@@ -56,8 +62,31 @@ export const SingleSolarFarm = () => {
           pvPanel: { loss, peakPower },
         })
       );
+    },
+    [dispatch]
+  );
+
+  const fetchFarmById = useCallback(async () => {
+    const { farmId } = query;
+    if (!isReady) {
+      return;
     }
-  }, [dispatch, fetchFarmByIdTrigger, isReady, query]);
+    const response = await fetchFarmByIdTrigger(Number(farmId));
+    if (response.data) {
+      dispatchFarmConfiguration(response.data);
+    }
+  }, [dispatchFarmConfiguration, fetchFarmByIdTrigger, isReady, query]);
+
+  const monthlyData = {
+    labels: monthsLabels,
+    datasets: [
+      {
+        label: "Monthly energy output from fix-angle PV system",
+        data: state.monthly.map(mapToPVEnergyProduction),
+        backgroundColor: "#FFB703",
+      },
+    ],
+  };
 
   useEffect(() => {
     fetchFarmById();
@@ -65,7 +94,12 @@ export const SingleSolarFarm = () => {
   }, [fetchFarmById, fetchProducedEnergyByFarm]);
 
   return (
-    <Grid sx={{ p: "4rem" }}>
+    <Grid
+      display="flex"
+      flexDirection="column"
+      gap={3}
+      sx={{ p: "4rem", width: "100%", height: "100%" }}
+    >
       {!query.farmId ? (
         <LoadingSpinner />
       ) : (
@@ -79,6 +113,15 @@ export const SingleSolarFarm = () => {
               farmAttributes={farmAttributes}
             />
             <OutputSolarFarm producedEnergy={state} />
+          </Grid>
+          <Grid
+            display="flex"
+            gap={2}
+            justifyContent="center"
+            alignItems="center"
+            sx={{ width: "100%" }}
+          >
+            <SolarFarmChart monthlyData={monthlyData} />
           </Grid>
         </>
       )}

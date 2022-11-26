@@ -38,9 +38,16 @@ async function getProducedEnergyByFarmId(
         const { outputs } = responseProducedEnergy.data;
 
         const producedEnergyData: ProducedEnergy = {
-          yearlyPVEnergyProductionKWH: outputs.totals.fixed.E_y,
-          yearToYearVariabilityKWH: outputs.totals.fixed["H(i)_y"],
-          yearlyInPlaneIrradiationKWM2: outputs.totals.fixed.SD_y,
+          yearly: {
+            pVEnergyProductionKWH: outputs.totals.fixed.E_y,
+            variabilityKWH: outputs.totals.fixed["H(i)_y"],
+            inPlaneIrradiationKWM2: outputs.totals.fixed.SD_y,
+          },
+          monthly: outputs.monthly.fixed.map((item) => ({
+            inPlaneIrradiationKWM2: item["H(i)_m"],
+            pVEnergyProductionKWH: item.E_m,
+            variabilityKWH: item.SD_m,
+          })),
         };
 
         res.status(200).json(producedEnergyData);

@@ -2,12 +2,12 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Button, Grid, Typography } from "@mui/material";
 import { useLazyGetAllFarmsQuery } from "redux/api/v1/farm";
+import { GridSelectionModel } from "@mui/x-data-grid";
 
 import { DashboardTable } from "./DashboardTable";
 import SolarFarmIcon from "common/images/solarFarm.svg";
 import { DashboardItem, DashboardItemProps } from "./DashboardItem";
 import { FarmModelI } from "types";
-import { GridSelectionModel } from "@mui/x-data-grid";
 
 export const DashboardComponent = () => {
   const [allFarms, setAllFarms] = useState<FarmModelI[]>([]);
@@ -21,7 +21,6 @@ export const DashboardComponent = () => {
 
   useEffect(() => {
     fetchAllSolarFarms();
-    console.log(selectionModel);
   }, [fetchAllSolarFarms, data, selectionModel]);
 
   const dashboardItems: DashboardItemProps[] = [

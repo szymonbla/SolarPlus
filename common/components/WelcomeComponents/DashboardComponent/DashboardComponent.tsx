@@ -21,7 +21,6 @@ export const DashboardComponent = () => {
 
   useEffect(() => {
     fetchAllSolarFarms();
-    console.log(selectionModel);
   }, [fetchAllSolarFarms, data, selectionModel]);
 
   const dashboardItems: DashboardItemProps[] = [

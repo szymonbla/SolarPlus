@@ -4,6 +4,7 @@ import {
   solarPanelConfigurationSchema,
 } from "common/components/Modals/types";
 export interface FarmModelI {
+  id?: number;
   farmName: string;
   location: LocationCoordinates;
   pvPanel: PvPanelAttributes;

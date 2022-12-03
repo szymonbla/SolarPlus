@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next/types";
+import { FarmModelI } from "types";
 
 export default async function handler(
   req: NextApiRequest,
@@ -6,6 +7,8 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     await getFarmById(req, res);
+  } else if (req.method === "PUT") {
+    await updateFarmById(req, res);
   } else {
     return res
       .status(405)
@@ -20,10 +23,35 @@ async function getFarmById(req: NextApiRequest, res: NextApiResponse) {
       where: {
         id,
       },
-      include: { location: true, pvPanel: true },
+      include: {
+        location: true,
+        pvPanel: true,
+        producedFarmEnergy: {
+          include: {
+            yearly: true,
+            monthly: true,
+          },
+        },
+      },
     });
 
     return res.status(200).json(farmlooking);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Something go wrong!", success: false });
+  }
+}
+
+async function updateFarmById(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const body = req.body as FarmModelI;
+
+    if (body.id) {
+      try {
+      } catch (error) {
+        console.log(error);
+      }
+    }
   } catch (error) {
     res.status(500).json({ message: "Something go wrong!", success: false });
   }

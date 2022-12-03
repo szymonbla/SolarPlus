@@ -45,6 +45,6 @@ async function createFarm(req: NextApiRequest, res: NextApiResponse) {
       .status(200)
       .json({ message: "Farm created successfully!", success: true });
   } catch (error) {
-    res.status(500).json({ message: error, success: false });
+    res.status(500).json(error);
   }
 }

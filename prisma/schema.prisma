@@ -25,6 +25,7 @@ model Account {
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -33,6 +34,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 model User {
@@ -57,22 +60,54 @@ model LocationCoordinates {
   id        String @id @default(uuid())
   latitude  String
   longitude String
-  Farm      Farm[]
+  Farm      Farm?
 }
 
 model PvPanel {
   id        String @id @default(uuid())
   peakPower Int
   loss      Int
-  Farm      Farm[]
+  Farm      Farm?
+}
+
+model MonthlyEnergyData {
+  id                     String              @id @default(uuid())
+  pVEnergyProductionKWH  Float
+  inPlaneIrradiationKWM2 Float
+  variabilityKWH         Float
+  producedFarmEnergy     ProducedFarmEnergy? @relation(fields: [producedFarmEnergyId], references: [id])
+  producedFarmEnergyId   String?
+
+  @@index([producedFarmEnergyId])
+}
+
+model YearlyEnergyData {
+  id                     String              @id @default(uuid())
+  pVEnergyProductionKWH  Float
+  inPlaneIrradiationKWM2 Float
+  variabilityKWH         Float
+  ProducedFarmEnergy     ProducedFarmEnergy?
+}
+
+model ProducedFarmEnergy {
+  id                 String              @id @default(uuid())
+  yearly             YearlyEnergyData?   @relation(fields: [yearlyEnergyDataId], references: [id])
+  yearlyEnergyDataId String?             @unique
+  Farm               Farm?
+  monthly            MonthlyEnergyData[]
 }
 
 model Farm {
   id                    Int                 @id @default(autoincrement())
   farmName              String              @unique
   location              LocationCoordinates @relation(fields: [locationCoordinatesId], references: [id])
-  locationCoordinatesId String
+  locationCoordinatesId String              @unique
   pvPanel               PvPanel             @relation(fields: [pvPanelId], references: [id])
-  pvPanelId             String
+  pvPanelId             String              @unique
+  producedFarmEnergy    ProducedFarmEnergy? @relation(fields: [producedFarmEnergyId], references: [id])
+  producedFarmEnergyId  String?             @unique
   created               DateTime            @default(now())
+
+  @@index([pvPanelId])
+  @@index([locationCoordinatesId])
 }

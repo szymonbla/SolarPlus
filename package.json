@@ -10,6 +10,7 @@
     "test": "jest",
     "prepare": "husky install",
     "prismaPush": "dotenv -e .env.local -- npx prisma db push",
+    "prismaPull": "dotenv -e .env.local -- npx prisma db pull",
     "prismaStudio": "dotenv -e .env.local -- npx prisma studio"
   },
   "dependencies": {

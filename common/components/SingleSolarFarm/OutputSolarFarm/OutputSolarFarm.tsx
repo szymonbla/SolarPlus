@@ -2,28 +2,26 @@ import {
   DashboardTileLayout,
   ReadOnlyTextField,
 } from "common/components/Shared";
-import { ProducedEnergy } from "types/farmEnergy";
+import { ProducedFarmEnergy } from "types/producedFarmEnergy";
 
 interface OutputSolarFarmProps {
-  producedEnergy: ProducedEnergy;
+  producedEnergy?: ProducedFarmEnergy;
 }
 
 export const OutputSolarFarm = ({ producedEnergy }: OutputSolarFarmProps) => {
-  const { inPlaneIrradiationKWM2, pVEnergyProductionKWH, variabilityKWH } =
-    producedEnergy.yearly;
   return (
     <DashboardTileLayout sx={{ flex: 1 }}>
       <ReadOnlyTextField
         label="Average annual energy production"
-        value={`${pVEnergyProductionKWH}`}
+        value={`${producedEnergy?.yearly?.pVEnergyProductionKWH}`}
       />
       <ReadOnlyTextField
         label="Standard deviation of the annual energy production due to year-to-year variation"
-        value={`${inPlaneIrradiationKWM2}`}
+        value={`${producedEnergy?.yearly?.variabilityKWH}`}
       />
       <ReadOnlyTextField
         label="Average annual sum of global irradiation per square meter received by the modules of the given system"
-        value={`${variabilityKWH}`}
+        value={`${producedEnergy?.yearly?.inPlaneIrradiationKWM2}`}
       />
     </DashboardTileLayout>
   );

@@ -20,7 +20,9 @@ const farmCreationSlice = createSlice({
   reducers: {
     setFarmConfiguration: (
       state,
-      { payload: { farmName, location, pvPanel } }: PayloadAction<FarmModelI>
+      {
+        payload: { farmName, location, pvPanel, producedFarmEnergy },
+      }: PayloadAction<FarmModelI>
     ) => {
       return {
         ...state,
@@ -32,6 +34,10 @@ const farmCreationSlice = createSlice({
         pvPanel: {
           loss: pvPanel?.loss,
           peakPower: pvPanel?.peakPower,
+        },
+        producedFarmEnergy: {
+          monthly: producedFarmEnergy?.monthly?.map((item) => item),
+          yearly: producedFarmEnergy?.yearly,
         },
       };
     },

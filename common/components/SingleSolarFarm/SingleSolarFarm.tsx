@@ -1,97 +1,66 @@
+import { useCallback, useEffect } from "react";
+
 import { Grid, Typography } from "@mui/material";
-import {
-  useLazyGetFarmByIdQuery,
-  useLazyGetProducedEnergyByFarmIdQuery,
-} from "redux/api/v1/farm";
+import { useLazyGetFarmByIdQuery } from "redux/api/v1/farm";
 import { useRouter } from "next/router";
-import { useCallback, useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { selectFarmState, setFarmConfiguration } from "redux/reducers";
+
 import { LoadingSpinner } from "../Loading";
 import { InputConfiguration } from "./InputConfiguration";
-import { selectFarmState, setFarmConfiguration } from "redux/reducers";
-import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { OutputSolarFarm } from "./OutputSolarFarm";
-import { EnergyType, ProducedEnergy } from "types/farmEnergy";
 import { SolarFarmChart } from "./SolarFarmChart";
-import { monthsLabels } from "common/constants";
 import { FarmModelI } from "types";
-
-function mapToPVEnergyProduction(data: EnergyType): number {
-  return data.pVEnergyProductionKWH;
-}
+import { useCreateProducedFarmEnergyMutation } from "redux/api/v1/energy";
 
 export const SingleSolarFarm = () => {
-  const [state, setState] = useState<ProducedEnergy>({
-    yearly: {
-      inPlaneIrradiationKWM2: 0,
-      pVEnergyProductionKWH: 0,
-      variabilityKWH: 0,
-    },
-    monthly: [],
-  });
+  const { query, isReady } = useRouter();
   const farmAttributes = useAppSelector(selectFarmState);
   const dispatch = useAppDispatch();
-  const { query, isReady } = useRouter();
 
   const [fetchFarmByIdTrigger] = useLazyGetFarmByIdQuery();
-  const [fetchProducedEnergyByFarmTrigger] =
-    useLazyGetProducedEnergyByFarmIdQuery();
-
-  const fetchProducedEnergyByFarm = useCallback(async () => {
-    const { farmId } = query;
-    if (!isReady) {
-      return;
-    }
-    const response = await fetchProducedEnergyByFarmTrigger(Number(farmId));
-    if (response.data) {
-      setState(response.data);
-    }
-  }, [fetchProducedEnergyByFarmTrigger, isReady, query]);
+  const [createProducedFarmEnergyTrigger] =
+    useCreateProducedFarmEnergyMutation();
 
   const dispatchFarmConfiguration = useCallback(
     (farmConfiguration: FarmModelI) => {
-      const {
-        farmName,
-        location: { latitude, longitude },
-        pvPanel: { loss, peakPower },
-      } = farmConfiguration;
-
-      dispatch(
-        setFarmConfiguration({
-          farmName,
-          location: { latitude, longitude },
-          pvPanel: { loss, peakPower },
-        })
-      );
+      dispatch(setFarmConfiguration(farmConfiguration));
     },
     [dispatch]
   );
 
   const fetchFarmById = useCallback(async () => {
     const { farmId } = query;
-    if (!isReady) {
+    if (!isReady) return;
+    const response = await fetchFarmByIdTrigger(Number(farmId));
+
+    return response.data;
+  }, [fetchFarmByIdTrigger, isReady, query]);
+
+  const handleFetching = useCallback(async () => {
+    const farm = await fetchFarmById();
+
+    if (!farm) return;
+
+    if (farm.producedFarmEnergy === null) {
+      await createProducedFarmEnergyTrigger(farm);
+      const farmCOn = await fetchFarmById();
+
+      farmCOn && dispatchFarmConfiguration(farmCOn);
+      return;
+    } else {
+      dispatchFarmConfiguration(farm);
       return;
     }
-    const response = await fetchFarmByIdTrigger(Number(farmId));
-    if (response.data) {
-      dispatchFarmConfiguration(response.data);
-    }
-  }, [dispatchFarmConfiguration, fetchFarmByIdTrigger, isReady, query]);
-
-  const monthlyData = {
-    labels: monthsLabels,
-    datasets: [
-      {
-        label: "Monthly energy output from fix-angle PV system",
-        data: state.monthly.map(mapToPVEnergyProduction),
-        backgroundColor: "#FFB703",
-      },
-    ],
-  };
+  }, [
+    createProducedFarmEnergyTrigger,
+    dispatchFarmConfiguration,
+    fetchFarmById,
+  ]);
 
   useEffect(() => {
-    fetchFarmById();
-    fetchProducedEnergyByFarm();
-  }, [fetchFarmById, fetchProducedEnergyByFarm]);
+    handleFetching();
+  }, [handleFetching]);
 
   return (
     <Grid
@@ -112,7 +81,9 @@ export const SingleSolarFarm = () => {
               isReadOnly={true}
               farmAttributes={farmAttributes}
             />
-            <OutputSolarFarm producedEnergy={state} />
+            <OutputSolarFarm
+              producedEnergy={farmAttributes.producedFarmEnergy}
+            />
           </Grid>
           <Grid
             display="flex"
@@ -121,7 +92,9 @@ export const SingleSolarFarm = () => {
             alignItems="center"
             sx={{ width: "100%" }}
           >
-            <SolarFarmChart monthlyData={monthlyData} />
+            <SolarFarmChart
+              monthlyData={farmAttributes.producedFarmEnergy?.monthly ?? []}
+            />
           </Grid>
         </>
       )}

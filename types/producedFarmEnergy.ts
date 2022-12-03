@@ -38,7 +38,7 @@ interface InputsType {
 
 interface OutputsType {
   monthly: {
-    fixed: MonthlyProducedEnergy[];
+    fixed: MonthlyData[];
   };
   totals: {
     fixed: {
@@ -58,7 +58,7 @@ interface OutputsType {
   };
 }
 
-interface MonthlyProducedEnergy {
+interface MonthlyData {
   month: number;
   E_d: number;
   E_m: number;
@@ -67,13 +67,19 @@ interface MonthlyProducedEnergy {
   SD_m: number;
 }
 
-export interface EnergyType {
+export interface EnergyData {
+  pVEnergyProductionKWH: number;
+  inPlaneIrradiationKWM2: number;
+  variabilityKWH: number;
+}
+export interface MonthlyEnergyData {
   pVEnergyProductionKWH: number;
   inPlaneIrradiationKWM2: number;
   variabilityKWH: number;
 }
 
-export interface ProducedEnergy {
-  yearly: EnergyType;
-  monthly: EnergyType[];
+export interface ProducedFarmEnergy {
+  id?: string;
+  yearly?: EnergyData;
+  monthly?: MonthlyEnergyData[];
 }

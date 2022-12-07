@@ -15,6 +15,7 @@ import { DashboardItem, DashboardItemProps } from "./DashboardItem";
 import { FarmModelI } from "types";
 import moment from "moment";
 import { DDMMYY } from "common/constants";
+import { DashboardFarmDetailsItem } from "./DashboardFarmDetailsItem";
 const MapComponent = dynamic(
   () =>
     import("common/components/MapComponent/MapComponent").then(
@@ -23,14 +24,15 @@ const MapComponent = dynamic(
   { ssr: false, loading: () => <LoadingSpinner /> }
 );
 export const DashboardComponent = () => {
-  const [allFarms, setAllFarms] = useState<FarmModelI[]>([]);
+  const [allSolarFarms, setAllFarms] = useState<FarmModelI[]>([]);
+  const [selectedSolarFarm, setSelectedSolarFarm] = useState<FarmModelI>();
   const [fetchSolarFarmsTrigger, { isSuccess: s }] = useLazyGetAllFarmsQuery();
   const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
   const [
     fetchSummarizedFarmsResultsTrigger,
     { data: summarizedData, isSuccess },
   ] = useLazyGetSummarizedFarmsResultsQuery();
-  const dateOfFirstCreatedSolarFarm = moment(allFarms[0]?.created).format(
+  const dateOfFirstCreatedSolarFarm = moment(allSolarFarms[0]?.created).format(
     DDMMYY
   );
 
@@ -80,11 +82,15 @@ export const DashboardComponent = () => {
         ))}
       </Grid>
       <Grid height="50%">
-        <MapComponent />
+        <MapComponent
+          allSolarFarms={allSolarFarms}
+          setSelectedSolarFarm={setSelectedSolarFarm}
+        />
       </Grid>
+      <DashboardFarmDetailsItem farmDetails={selectedSolarFarm} />
 
       {/* <DashboardTable
-        rows={allFarms}
+        rows={allSolarFarms}
         selectionModel={selectionModel}
         setSelectionModel={setSelectionModel}
       />

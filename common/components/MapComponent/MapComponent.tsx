@@ -1,30 +1,27 @@
-import { useCallback, useEffect, useState } from "react";
-import Link from "next/link";
+import { Dispatch, SetStateAction } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { icon } from "leaflet";
+import { Button } from "@mui/material";
 import "leaflet/dist/leaflet.css";
 
-import { useLazyGetAllFarmsQuery } from "redux/api/v1/farm";
 import { FarmModelI } from "types";
 
 const ICON = icon({
   iconUrl: "/images/markerIcon.svg",
   iconSize: [32, 32],
 });
-export const MapComponent = () => {
-  const CENTER_LAT = 40.866667;
-  const CENTER_LON = 34.56666;
-  const [allFarms, setAllFarms] = useState<FarmModelI[]>([]);
-  const [fetchSolarFarmsTrigger] = useLazyGetAllFarmsQuery();
 
-  const fetchAllSolarFarms = useCallback(async () => {
-    const response = await fetchSolarFarmsTrigger("");
-    response.data && setAllFarms(response.data);
-  }, [fetchSolarFarmsTrigger]);
+interface MapComponentProps {
+  allSolarFarms: FarmModelI[];
+  setSelectedSolarFarm: Dispatch<SetStateAction<FarmModelI | undefined>>;
+}
 
-  useEffect(() => {
-    fetchAllSolarFarms();
-  }, [fetchAllSolarFarms]);
+export const MapComponent = ({
+  allSolarFarms,
+  setSelectedSolarFarm,
+}: MapComponentProps) => {
+  const CENTER_LAT = 40.8667;
+  const CENTER_LON = 34.566;
 
   return (
     <MapContainer
@@ -37,14 +34,19 @@ export const MapComponent = () => {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {allFarms.map(({ farmName, location, id }) => (
+      {allSolarFarms.map((solarFarm) => (
         <Marker
-          position={[Number(location.latitude), Number(location.longitude)]}
+          position={[
+            Number(solarFarm.location.latitude),
+            Number(solarFarm.location.longitude),
+          ]}
           icon={ICON}
-          key={farmName}
+          key={solarFarm.farmName}
         >
           <Popup>
-            Farm name: {farmName} <Link href={`/farms/${id}`}>Details</Link>
+            <Button onClick={() => setSelectedSolarFarm(solarFarm)}>
+              View
+            </Button>
           </Popup>
         </Marker>
       ))}

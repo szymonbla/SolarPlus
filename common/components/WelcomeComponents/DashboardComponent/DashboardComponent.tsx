@@ -1,4 +1,4 @@
-import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useCallback, useEffect, useState } from "react";
 import { Button, Grid, Typography } from "@mui/material";
 import {
@@ -6,6 +6,7 @@ import {
   useLazyGetSummarizedFarmsResultsQuery,
 } from "redux/api/v1/farm";
 import { GridSelectionModel } from "@mui/x-data-grid";
+import { LoadingSpinner } from "common/components";
 
 import { DashboardTable } from "./DashboardTable";
 import SolarFarmIcon from "common/images/solarFarm.svg";
@@ -14,7 +15,13 @@ import { DashboardItem, DashboardItemProps } from "./DashboardItem";
 import { FarmModelI } from "types";
 import moment from "moment";
 import { DDMMYY } from "common/constants";
-
+const MapComponent = dynamic(
+  () =>
+    import("common/components/MapComponent/MapComponent").then(
+      (item) => item.MapComponent
+    ),
+  { ssr: false, loading: () => <LoadingSpinner /> }
+);
 export const DashboardComponent = () => {
   const [allFarms, setAllFarms] = useState<FarmModelI[]>([]);
   const [fetchSolarFarmsTrigger, { isSuccess: s }] = useLazyGetAllFarmsQuery();
@@ -72,14 +79,18 @@ export const DashboardComponent = () => {
           <DashboardItem {...item} key={index} />
         ))}
       </Grid>
-      <DashboardTable
+      <Grid height="50%">
+        <MapComponent />
+      </Grid>
+
+      {/* <DashboardTable
         rows={allFarms}
         selectionModel={selectionModel}
         setSelectionModel={setSelectionModel}
       />
       <Link href={`/farms/${selectionModel[0]}`}>
         <Button>Open details</Button>
-      </Link>
+      </Link> */}
     </Grid>
   );
 };

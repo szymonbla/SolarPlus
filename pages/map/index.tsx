@@ -6,7 +6,7 @@ import { LoadingSpinner } from "common/components";
 const MapComponent = dynamic(
   () =>
     import(
-      "common/components/WelcomeComponents/MapComponent/MapComponent"
+      "common/components/MapComponent/MapComponent"
     ).then((item) => item.MapComponent),
   { ssr: false, loading: () => <LoadingSpinner /> }
 );

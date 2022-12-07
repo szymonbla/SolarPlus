@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { Button, Grid, Typography } from "@mui/material";
-import { useLazyGetAllFarmsQuery } from "redux/api/v1/farm";
+import {
+  useLazyGetAllFarmsQuery,
+  useLazyGetSummarizedFarmsResultsQuery,
+} from "redux/api/v1/farm";
 import { GridSelectionModel } from "@mui/x-data-grid";
 
 import { DashboardTable } from "./DashboardTable";
@@ -13,26 +16,37 @@ export const DashboardComponent = () => {
   const [allFarms, setAllFarms] = useState<FarmModelI[]>([]);
   const [fetchSolarFarmsTrigger, { data }] = useLazyGetAllFarmsQuery();
   const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
+  const [
+    fetchSummarizedFarmsResultsTrigger,
+    { data: summarizedData, isSuccess },
+  ] = useLazyGetSummarizedFarmsResultsQuery();
 
   const fetchAllSolarFarms = useCallback(async () => {
     const response = await fetchSolarFarmsTrigger("");
     response.data && setAllFarms(response.data);
   }, [fetchSolarFarmsTrigger]);
 
+  const fetchSummarizedFarmsResults = useCallback(async () => {
+    await fetchSummarizedFarmsResultsTrigger("");
+  }, [fetchSummarizedFarmsResultsTrigger]);
+
   useEffect(() => {
     fetchAllSolarFarms();
-  }, [fetchAllSolarFarms, data, selectionModel]);
+    fetchSummarizedFarmsResults();
+  }, [fetchAllSolarFarms, fetchSummarizedFarmsResults]);
 
   const dashboardItems: DashboardItemProps[] = [
-    { icon: SolarFarmIcon, subtitle: "Amount of solar farms", value: "0" },
+    {
+      icon: SolarFarmIcon,
+      subtitle: "averagePVProduction",
+      value: summarizedData?.averagePVProduction ?? 0,
+    },
     {
       icon: SolarFarmIcon,
       subtitle: "Your solar farms",
-      value: allFarms?.length ?? 0,
+      value: summarizedData?.amountOfFarms ?? 0,
       isAddingAvailable: true,
     },
-    { icon: SolarFarmIcon, subtitle: "Amount of solar farms", value: "0" },
-    { icon: SolarFarmIcon, subtitle: "Amount of solar farms", value: "0" },
   ];
 
   return (

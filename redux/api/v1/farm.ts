@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 import { ProducedFarmEnergy } from "types/producedFarmEnergy";
-import { FarmModelI, RecursivePartial } from "types";
+import { FarmModelI, RecursivePartial, SummarizedFarmsResults } from "types";
 import { baseQuery } from "./config";
 
 export const farmApi = createApi({
@@ -40,6 +40,10 @@ export const farmApi = createApi({
         body,
       }),
     }),
+    getSummarizedFarmsResults: builder.query<SummarizedFarmsResults, unknown>({
+      query: () => ({ url: "summarizedFarmsResults" }),
+      providesTags: ["Farm"],
+    }),
   }),
 });
 
@@ -49,4 +53,5 @@ export const {
   useLazyGetFarmByIdQuery,
   useUpdateFarmByIdMutation,
   useLazyGetProducedEnergyByFarmIdQuery,
+  useLazyGetSummarizedFarmsResultsQuery,
 } = farmApi;

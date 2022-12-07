@@ -8,7 +8,7 @@ import { DashboardTileLayout } from "common/components/Shared";
 
 export interface DashboardItemProps {
   icon: string;
-  value: string | number;
+  value: number;
   subtitle: string;
   isAddingAvailable?: boolean;
 }
@@ -28,7 +28,7 @@ export const DashboardItem = ({
     <DashboardTileLayout
       sx={{
         height: 250,
-        width: 300,
+        width: "30%",
         gap: 2,
         display: "flex",
         flexDirection: "column",

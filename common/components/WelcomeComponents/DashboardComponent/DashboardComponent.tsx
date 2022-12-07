@@ -9,17 +9,23 @@ import { GridSelectionModel } from "@mui/x-data-grid";
 
 import { DashboardTable } from "./DashboardTable";
 import SolarFarmIcon from "common/images/solarFarm.svg";
+import EnergyBoltIcon from "common/images/energyBolt.svg";
 import { DashboardItem, DashboardItemProps } from "./DashboardItem";
 import { FarmModelI } from "types";
+import moment from "moment";
+import { DDMMYY } from "common/constants";
 
 export const DashboardComponent = () => {
   const [allFarms, setAllFarms] = useState<FarmModelI[]>([]);
-  const [fetchSolarFarmsTrigger, { data }] = useLazyGetAllFarmsQuery();
+  const [fetchSolarFarmsTrigger, { isSuccess: s }] = useLazyGetAllFarmsQuery();
   const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
   const [
     fetchSummarizedFarmsResultsTrigger,
     { data: summarizedData, isSuccess },
   ] = useLazyGetSummarizedFarmsResultsQuery();
+  const dateOfFirstCreatedSolarFarm = moment(allFarms[0]?.created).format(
+    DDMMYY
+  );
 
   const fetchAllSolarFarms = useCallback(async () => {
     const response = await fetchSolarFarmsTrigger("");
@@ -38,14 +44,16 @@ export const DashboardComponent = () => {
   const dashboardItems: DashboardItemProps[] = [
     {
       icon: SolarFarmIcon,
-      subtitle: "averagePVProduction",
-      value: summarizedData?.averagePVProduction ?? 0,
+      title: "Number of farms you have started",
+      value: summarizedData?.amountOfFarms ?? 0,
+      subtitle: `since ${dateOfFirstCreatedSolarFarm}`,
     },
     {
-      icon: SolarFarmIcon,
-      subtitle: "Your solar farms",
-      value: summarizedData?.amountOfFarms ?? 0,
-      isAddingAvailable: true,
+      icon: EnergyBoltIcon,
+      title: "Annual total PV production from all farms",
+      value: summarizedData?.averagePVProduction ?? 0,
+      subtitle: "from all your farms",
+      unit: "kWh",
     },
   ];
 

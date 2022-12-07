@@ -37,3 +37,8 @@ export interface IdWithFarmModel {
 }
 
 export type MainFarmConfigurationData = z.infer<typeof mainFarmConfiguration>;
+
+export interface SummarizedFarmsResults {
+  averagePVProduction: number;
+  amountOfFarms: number;
+}

@@ -36,7 +36,7 @@ async function createProducedEnergy(req: NextApiRequest, res: NextApiResponse) {
         farmlooking
       );
 
-      if (responseProducedEnergy.monthly && body.id) {
+      if (responseProducedEnergy && responseProducedEnergy.monthly && body.id) {
         await prisma?.producedFarmEnergy.create({
           data: {
             Farm: { connect: { id: body.id } },
@@ -94,11 +94,7 @@ async function getEnergyFromExternalAPI({
 
     return test;
   } catch (error) {
-    let message;
-    if (axios.isAxiosError(error) && error.response) {
-      message = error.response.data.message;
-    } else message = String(error);
-    throw error;
+    console.log(error);
   }
 }
 

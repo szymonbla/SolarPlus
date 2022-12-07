@@ -1,2 +1,2 @@
 export * from "./DashboardComponent";
-export * from "./ComparatorComponent";
+export * from "./FarmsComponent";

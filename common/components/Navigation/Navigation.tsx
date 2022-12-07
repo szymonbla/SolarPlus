@@ -14,14 +14,9 @@ export const Navigation = () => {
       icon: DashboardIcon,
     },
     {
-      label: "Map",
-      hrefLink: RoutesDefinition.map,
+      label: "Farms",
+      hrefLink: RoutesDefinition.farms,
       icon: MapIcon,
-    },
-    {
-      label: "Comparator (SOON)",
-      hrefLink: RoutesDefinition.comparator,
-      icon: ComparatorIcon,
     },
   ];
 

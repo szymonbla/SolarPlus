@@ -1,6 +1,6 @@
 import { GridColDef, GridColumnGroupingModel } from "@mui/x-data-grid";
 
-const CELL_WIDTH = 140;
+const CELL_WIDTH = 200;
 
 const cellConfig: Omit<GridColDef, "field"> = {
   minWidth: CELL_WIDTH,
@@ -9,6 +9,12 @@ const cellConfig: Omit<GridColDef, "field"> = {
 };
 
 export const columns: GridColDef[] = [
+  {
+    ...cellConfig,
+    field: "id",
+    type: "number",
+    minWidth: 70,
+  },
   {
     ...cellConfig,
     field: "farmName",

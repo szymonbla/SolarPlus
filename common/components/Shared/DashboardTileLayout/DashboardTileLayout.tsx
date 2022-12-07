@@ -15,9 +15,9 @@ export const DashboardTileLayout = ({
       sx={{
         position: "relative",
         borderRadius: 3,
-        backgroundColor: "common.white",
         p: "2rem",
-        boxShadow: "-3px 9px 11px 1px rgba(238, 238, 247, 1);",
+        backgroundColor: "common.white",
+        boxShadow: "-3px 15px 11px 1px rgba(238, 238, 247, 1);",
         ...sx,
       }}
     >

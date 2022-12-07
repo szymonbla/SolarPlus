@@ -41,7 +41,7 @@ const LoginPage = () => {
           Login
         </Typography>
         <Typography variant="h3" color="common.white">
-          Compare and visualise your solar farm
+          Join the clean-energy revolution
         </Typography>
         <Grid sx={{ width: "60%" }}>
           <GoogleFormButton handleClick={handleGoogleSignIn} />

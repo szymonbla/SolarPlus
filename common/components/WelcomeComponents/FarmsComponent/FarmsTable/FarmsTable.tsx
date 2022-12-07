@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from "react";
-import { Grid } from "@mui/material";
 import { DataGrid, GridSelectionModel } from "@mui/x-data-grid";
 import moment from "moment";
 
@@ -7,7 +6,7 @@ import { DashboardTileLayout } from "common/components/Shared";
 import { FarmModelI } from "types";
 import { columnGroupingModel, columns, DDMMYY } from "common/constants";
 
-interface DashboardTableProps {
+interface FarmsTableProps {
   rows: FarmModelI[];
   selectionModel: GridSelectionModel;
   setSelectionModel: Dispatch<SetStateAction<GridSelectionModel>>;
@@ -24,17 +23,17 @@ function mapToTableGrid(farm: FarmModelI) {
   };
 }
 
-export const DashboardTable = ({
+export const FarmsTable = ({
   rows,
   selectionModel,
   setSelectionModel,
-}: DashboardTableProps) => {
+}: FarmsTableProps) => {
   const mappedFarms = rows.map(mapToTableGrid);
 
   return (
     <DashboardTileLayout
       sx={{
-        width: 964,
+        width: "100%",
         height: "100%",
         my: "2rem",
       }}

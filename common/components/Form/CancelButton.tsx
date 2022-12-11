@@ -1,6 +1,6 @@
 import { Button, SxProps } from "@mui/material";
 import Image from "next/image";
-import TrashIcon from "common/images/trash.svg";
+import TrashIcon from "common/images/actionBar/delete.svg";
 
 interface CancelButtonProps {
   label: string;

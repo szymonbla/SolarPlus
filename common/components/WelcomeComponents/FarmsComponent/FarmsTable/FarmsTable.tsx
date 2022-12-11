@@ -1,14 +1,15 @@
 import { Dispatch, SetStateAction } from "react";
-import { DataGrid, GridSelectionModel } from "@mui/x-data-grid";
+import { DataGrid, GridColDef, GridSelectionModel } from "@mui/x-data-grid";
 import moment from "moment";
 
 import { DashboardTileLayout } from "common/components/Shared";
 import { FarmModelI } from "types";
-import { columnGroupingModel, columns, DDMMYY } from "common/constants";
+import { columnGroupingModel, cellConfig, DDMMYY } from "common/constants";
 
 interface FarmsTableProps {
   rows: FarmModelI[];
   selectionModel: GridSelectionModel;
+  editable: boolean;
   setSelectionModel: Dispatch<SetStateAction<GridSelectionModel>>;
 }
 
@@ -26,6 +27,7 @@ function mapToTableGrid(farm: FarmModelI) {
 export const FarmsTable = ({
   rows,
   selectionModel,
+  editable,
   setSelectionModel,
 }: FarmsTableProps) => {
   const mappedFarms = rows.map(mapToTableGrid);
@@ -40,14 +42,15 @@ export const FarmsTable = ({
     >
       <DataGrid
         rows={mappedFarms}
-        columns={columns}
+        columns={getColumns(editable)}
         pageSize={7}
         rowsPerPageOptions={[7]}
-        experimentalFeatures={{ columnGrouping: true }}
+        experimentalFeatures={{ columnGrouping: true, newEditingApi: true }}
         columnGroupingModel={columnGroupingModel}
         onSelectionModelChange={(newSelectionModel) => {
           setSelectionModel(newSelectionModel);
         }}
+        editMode="row"
         selectionModel={selectionModel}
         sx={{
           "& .MuiDataGrid-columnSeparator": { color: "grey.300" },
@@ -57,3 +60,56 @@ export const FarmsTable = ({
     </DashboardTileLayout>
   );
 };
+
+function getColumns(editable: boolean) {
+  const columns: GridColDef[] = [
+    {
+      ...cellConfig,
+      field: "id",
+      type: "number",
+      minWidth: 70,
+    },
+    {
+      ...cellConfig,
+      field: "farmName",
+      headerName: "Farm name",
+      editable,
+    },
+    {
+      ...cellConfig,
+      field: "created",
+      headerName: "Farm created",
+    },
+    {
+      ...cellConfig,
+      field: "latitude",
+      headerName: "Latitude",
+      type: "number",
+      editable,
+    },
+    {
+      ...cellConfig,
+      field: "longitude",
+      headerName: "Longitude",
+      type: "number",
+      editable,
+    },
+
+    {
+      ...cellConfig,
+      field: "peakPower",
+      headerName: "PeakPower",
+      type: "number",
+      editable,
+    },
+    {
+      ...cellConfig,
+      field: "loss",
+      headerName: "Loss",
+      type: "number",
+      editable,
+    },
+  ];
+
+  return columns;
+}

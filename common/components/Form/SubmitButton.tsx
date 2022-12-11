@@ -1,5 +1,4 @@
 import { Button, SxProps } from "@mui/material";
-import Image from "next/image";
 
 interface SubmitButtonProps {
   label: string;

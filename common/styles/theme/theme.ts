@@ -19,11 +19,16 @@ export const theme = createTheme({
     success: {
       main: "#008929",
     },
+    info: {
+      main: "#006ED4",
+    },
     warning: {
       main: "#F98600",
+      "300": "#F9860075",
     },
     error: {
       main: "#DA0027",
+      "300": "#DA002775",
     },
     background: {
       default: "#1C1C3A",
@@ -34,10 +39,12 @@ export const theme = createTheme({
     },
     primary: {
       main: "#5661FF",
+      "300": "#5661FF75",
     },
     divider: "#dcfaff",
     secondary: {
       main: "#FD79A1",
+      "300": "#FD79A175",
     },
     text: {
       primary: "#161618",

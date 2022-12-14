@@ -1,12 +1,9 @@
-import { Grid, Typography } from "@mui/material";
-import { FormInputField } from "common/components/Form";
+import { Grid } from "@mui/material";
 import { ReadOnlyTextField } from "common/components/Shared";
 import { useAppSelector } from "redux/hooks";
 import { selectFarmState } from "redux/reducers";
-interface SummaryPanelProps {
-  formId: string;
-}
-export const SummaryPanel = ({ formId }: SummaryPanelProps) => {
+
+export const SummaryPanel = () => {
   const actualState = useAppSelector(selectFarmState);
 
   return (

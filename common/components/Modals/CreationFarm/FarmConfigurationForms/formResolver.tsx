@@ -14,7 +14,7 @@ export const creationFormResolver = (
       return <SolarFarmForm formId={formId} />;
     }
     case 2: {
-      return <SummaryPanel formId={formId} />;
+      return <SummaryPanel />;
     }
 
     default: {

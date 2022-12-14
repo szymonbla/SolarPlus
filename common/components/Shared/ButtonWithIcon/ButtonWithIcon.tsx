@@ -3,8 +3,10 @@ import { Button, SxProps } from "@mui/material";
 
 interface ButtonWithIcon {
   label: string;
-  handleClick: () => void;
   icon: string;
+  handleClick?: (props?: any) => void;
+  type?: "button" | "submit" | "reset" | undefined;
+  formId?: string;
   disabled?: boolean;
   isStartIcon?: boolean;
   sx?: SxProps;
@@ -16,10 +18,14 @@ export const ButtonWithIcon = ({
   label,
   isStartIcon,
   disabled,
+  formId,
+  type,
   sx,
 }: ButtonWithIcon) => {
   return (
     <Button
+      type={type}
+      form={formId}
       onClick={handleClick}
       disabled={disabled}
       startIcon={

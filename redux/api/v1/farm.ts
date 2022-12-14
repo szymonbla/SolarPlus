@@ -30,7 +30,7 @@ export const farmApi = createApi({
     getProducedEnergyByFarmId: builder.query<ProducedFarmEnergy, number>({
       query: (id) => ({ url: `farmEnergy/${id}` }),
     }),
-    updateFarmById: builder.mutation<FarmModelI, RecursivePartial<FarmModelI>>({
+    updateFarmById: builder.mutation<string, RecursivePartial<FarmModelI>>({
       query: (body) => ({
         url: `farm/${body.id}`,
         headers: {
@@ -39,6 +39,7 @@ export const farmApi = createApi({
         method: "PUT",
         body,
       }),
+      invalidatesTags: ["Farm"],
     }),
     getSummarizedFarmsResults: builder.query<SummarizedFarmsResults, unknown>({
       query: () => ({ url: "summarizedFarmsResults" }),

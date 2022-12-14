@@ -3,12 +3,16 @@ import { Grid, Typography } from "@mui/material";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { setFarmConfiguration, selectFarmState, nextStep } from "redux/reducers";
+import {
+  setFarmConfiguration,
+  selectFarmState,
+  nextStep,
+} from "redux/reducers";
 
 import {
-  FarmConfigurationData,
-  farmConfigurationSchema,
-} from "common/components/Modals/types";
+  FarmInitializationData,
+  farmInitializationSchema,
+} from "common/components/Modals/farmformTypes";
 import { FormInputField } from "common/components/Form";
 
 interface FarmInitializationFormProps {
@@ -21,9 +25,9 @@ export const FarmInitializationForm = ({
   const dispatch = useAppDispatch();
   const actualState = useAppSelector(selectFarmState);
 
-  const formMethods = useForm<FarmConfigurationData>({
+  const formMethods = useForm<FarmInitializationData>({
     mode: "onChange",
-    resolver: zodResolver(farmConfigurationSchema),
+    resolver: zodResolver(farmInitializationSchema),
     defaultValues: {
       farmName: "",
       latitude: "",
@@ -33,7 +37,7 @@ export const FarmInitializationForm = ({
   });
 
   const handleSubmit = useCallback(
-    ({ farmName, latitude, longitude }: FarmConfigurationData) => {
+    ({ farmName, latitude, longitude }: FarmInitializationData) => {
       dispatch(
         setFarmConfiguration({
           ...actualState,

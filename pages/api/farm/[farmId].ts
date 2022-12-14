@@ -48,6 +48,26 @@ async function updateFarmById(req: NextApiRequest, res: NextApiResponse) {
 
     if (body.id) {
       try {
+        await prisma?.farm.update({
+          where: { id: body.id },
+          data: {
+            farmName: body.farmName,
+            location: {
+              update: {
+                latitude: body.location.latitude,
+                longitude: body.location.longitude,
+              },
+            },
+            pvPanel: {
+              update: {
+                loss: body.pvPanel.loss,
+                peakPower: body.pvPanel.peakPower,
+              },
+            },
+          },
+        });
+
+        res.status(200).json({ message: "Farm changed successfully!" });
       } catch (error) {
         console.log(error);
       }

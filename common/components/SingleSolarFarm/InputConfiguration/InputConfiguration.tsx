@@ -6,11 +6,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { FormInputField } from "common/components/Form";
 import { DashboardTileLayout } from "common/components/Shared";
+import { FarmModelI } from "types";
 import {
-  FarmModelI,
-  mainFarmConfiguration,
-  MainFarmConfigurationData,
-} from "types";
+  solarFarmInputs,
+  SolarFarmInputsData,
+} from "common/components/Modals/farmformTypes";
 
 interface InputConfigurationProps {
   isReadOnly: boolean;
@@ -21,9 +21,9 @@ export const InputConfiguration = ({
   isReadOnly,
   farmAttributes,
 }: InputConfigurationProps) => {
-  const formMethods = useForm<MainFarmConfigurationData>({
+  const formMethods = useForm<SolarFarmInputsData>({
     mode: "onChange",
-    resolver: zodResolver(mainFarmConfiguration),
+    resolver: zodResolver(solarFarmInputs),
     reValidateMode: "onChange",
   });
 

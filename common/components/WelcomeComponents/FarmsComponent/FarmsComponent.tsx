@@ -48,7 +48,6 @@ export const FarmsComponent = () => {
         </Typography>
         <FarmActionBar
           selectedFarmIndex={selectionModel}
-          inEdit={isInEditFarm}
           setEdit={setIsInEditFarm}
         />
       </Grid>

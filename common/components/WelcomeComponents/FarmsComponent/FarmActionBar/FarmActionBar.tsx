@@ -10,11 +10,13 @@ import EditIcon from "common/images/actionBar/edit.svg";
 interface FarmActionBarProps {
   selectedFarmIndex: GridSelectionModel;
   setEdit: Dispatch<SetStateAction<boolean>>;
+  deleteSolarFarmById: () => Promise<void>;
 }
 
 export const FarmActionBar = ({
   selectedFarmIndex,
   setEdit,
+  deleteSolarFarmById,
 }: FarmActionBarProps) => {
   const dispatch = useAppDispatch();
   const isFarmSelected = selectedFarmIndex.length !== 0;
@@ -37,13 +39,13 @@ export const FarmActionBar = ({
         disabled={!isFarmSelected}
         icon={EditIcon}
         sx={{
-          backgroundColor: !isFarmSelected ? `warning.300` : "warning.main",
-          "&:hover": { backgroundColor: "warning.main" },
+          backgroundColor: !isFarmSelected ? `info.300` : "info.main",
+          "&:hover": { backgroundColor: "info.main" },
         }}
       />
       <ButtonWithIcon
         label="Delete"
-        handleClick={() => console.log("tes")}
+        handleClick={deleteSolarFarmById}
         isStartIcon={true}
         disabled={!isFarmSelected}
         icon={DeleteIcon}

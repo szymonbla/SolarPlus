@@ -45,6 +45,17 @@ export const farmApi = createApi({
       query: () => ({ url: "summarizedFarmsResults" }),
       providesTags: ["Farm"],
     }),
+    deleteFarmById: builder.mutation<string, number>({
+      query: (body) => ({
+        url: `farm/${body}`,
+        headers: {
+          "content-type": "application/json",
+        },
+        method: "DELETE",
+        body,
+      }),
+      invalidatesTags: ["Farm"],
+    }),
   }),
 });
 
@@ -55,4 +66,5 @@ export const {
   useUpdateFarmByIdMutation,
   useLazyGetProducedEnergyByFarmIdQuery,
   useLazyGetSummarizedFarmsResultsQuery,
+  useDeleteFarmByIdMutation,
 } = farmApi;

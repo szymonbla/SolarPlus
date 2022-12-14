@@ -1,10 +1,9 @@
 import { WelcomePageLayout } from "layouts";
-import { CreationFarm, FarmsComponent } from "common/components";
+import { FarmsComponent } from "common/components";
 
 const FarmsPage = () => {
   return (
     <WelcomePageLayout>
-      <CreationFarm />
       <FarmsComponent />
     </WelcomePageLayout>
   );

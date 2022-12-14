@@ -9,7 +9,7 @@ import { FormInputField } from "common/components/Form";
 import {
   SolarPanelConfigurationData,
   solarPanelConfigurationSchema,
-} from "common/components/Modals/types";
+} from "common/components/Modals/farmformTypes";
 
 interface SolarFarmFormProps {
   formId: string;

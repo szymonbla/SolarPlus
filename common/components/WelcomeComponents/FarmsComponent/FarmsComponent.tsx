@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { Grid, Typography } from "@mui/material";
 import { GridSelectionModel } from "@mui/x-data-grid";
-import { useLazyGetAllFarmsQuery } from "redux/api/v1/farm";
+import {
+  useDeleteFarmByIdMutation,
+  useLazyGetAllFarmsQuery,
+} from "redux/api/v1/farm";
 import { FarmsTable } from "./FarmsTable";
 import { FarmModelI } from "types";
 import { FarmActionBar } from "./FarmActionBar";
@@ -14,14 +17,18 @@ export const FarmsComponent = () => {
   const [isInEditFarm, setIsInEditFarm] = useState<boolean>(false);
   const [fetchSolarFarmsTrigger, { data: solarData }] =
     useLazyGetAllFarmsQuery();
+  const [deleteSolarFarmTrigger] = useDeleteFarmByIdMutation();
   const farmToEditIndex = Number(selectionModel[0]) ?? 0;
   const farmToEdit = allSolarFarms.find((farm) => farm.id === farmToEditIndex);
 
   const fetchAllSolarFarms = useCallback(async () => {
     const response = await fetchSolarFarmsTrigger("");
-    console.log("again");
     response.data && setAllFarms(response.data);
   }, [fetchSolarFarmsTrigger]);
+
+  const deleteSolarFarmById = useCallback(async () => {
+    await deleteSolarFarmTrigger(farmToEdit?.id ?? 0);
+  }, [deleteSolarFarmTrigger, farmToEdit]);
 
   useEffect(() => {
     fetchAllSolarFarms();
@@ -48,6 +55,7 @@ export const FarmsComponent = () => {
         </Typography>
         <FarmActionBar
           selectedFarmIndex={selectionModel}
+          deleteSolarFarmById={deleteSolarFarmById}
           setEdit={setIsInEditFarm}
         />
       </Grid>

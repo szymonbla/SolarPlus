@@ -9,6 +9,8 @@ export default async function handler(
     await getFarmById(req, res);
   } else if (req.method === "PUT") {
     await updateFarmById(req, res);
+  } else if (req.method === "DELETE") {
+    await deleteFarmById(req, res);
   } else {
     return res
       .status(405)
@@ -68,6 +70,26 @@ async function updateFarmById(req: NextApiRequest, res: NextApiResponse) {
         });
 
         res.status(200).json({ message: "Farm changed successfully!" });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Something go wrong!", success: false });
+  }
+}
+
+async function deleteFarmById(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const farmId = req.body as number;
+
+    if (farmId) {
+      try {
+        await prisma?.farm.delete({
+          where: { id: farmId },
+        });
+
+        res.status(200).json({ message: "Farm deleted successfully!" });
       } catch (error) {
         console.log(error);
       }

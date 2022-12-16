@@ -18,6 +18,7 @@ export const theme = createTheme({
     },
     success: {
       main: "#008929",
+      "300": "#00892975",
     },
     info: {
       main: "#006ED4",

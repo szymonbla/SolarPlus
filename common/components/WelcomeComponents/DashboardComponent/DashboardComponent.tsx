@@ -14,15 +14,10 @@ import { FarmModelI } from "types";
 import moment from "moment";
 import { DDMMYY } from "common/constants";
 import { DashboardFarmDetailsItem } from "./DashboardFarmDetailsItem";
-
-const MapComponent = dynamic(
-  () =>
-    import("common/components/MapComponent/MapComponent").then(
-      (item) => item.MapComponent
-    ),
+const DashboardMap = dynamic(
+  () => import("./DashboardMap/DashboardMap").then((item) => item.DashboardMap),
   { ssr: false, loading: () => <LoadingSpinner /> }
 );
-
 export const DashboardComponent = () => {
   const [allSolarFarms, setAllFarms] = useState<FarmModelI[]>([]);
   const [selectedSolarFarm, setSelectedSolarFarm] = useState<FarmModelI>();
@@ -81,7 +76,7 @@ export const DashboardComponent = () => {
         ))}
       </Grid>
       <Grid height="50%">
-        <MapComponent
+        <DashboardMap
           allSolarFarms={allSolarFarms}
           setSelectedSolarFarm={setSelectedSolarFarm}
         />

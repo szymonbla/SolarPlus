@@ -9,4 +9,3 @@ const FarmsPage = () => {
   );
 };
 export default FarmsPage;
-FarmsPage.auth = true;

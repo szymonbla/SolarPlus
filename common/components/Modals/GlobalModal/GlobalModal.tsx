@@ -3,7 +3,7 @@ import { Modal, Box } from "@mui/material";
 import { useAppSelector } from "redux/hooks";
 import { selectModalState } from "redux/reducers";
 interface GlobalModalProps {
-  handleClose: () => void;
+  handleClose?: () => void;
   children?: ReactNode;
 }
 

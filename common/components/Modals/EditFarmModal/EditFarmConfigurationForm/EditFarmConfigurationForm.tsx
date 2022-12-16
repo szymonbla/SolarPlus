@@ -1,10 +1,23 @@
-import { useEffect } from "react";
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 import { Grid, Typography } from "@mui/material";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FormInputField } from "common/components/Form";
 import { solarFarmInputs, SolarFarmInputsData } from "../../farmformTypes";
 import { FarmModelI } from "types";
+import { LoadingSpinner } from "common/components/Loading";
+import { ButtonWithIcon } from "common/components/Shared";
+import SelectLocalization from "common/images/selectLocalization.svg";
+import { LatLng } from "leaflet";
+
+const MapModal = dynamic(
+  () =>
+    import("common/components/Modals/MapModal/MapModal").then(
+      (item) => item.MapModal
+    ),
+  { ssr: false, loading: () => <LoadingSpinner /> }
+);
 interface EditFarmConfigurationFormProps {
   handleSubmit: SubmitHandler<SolarFarmInputsData>;
   solarFarm?: FarmModelI;
@@ -14,6 +27,9 @@ export const EditFarmConfigurationForm = ({
   solarFarm,
   handleSubmit,
 }: EditFarmConfigurationFormProps) => {
+  const [isSelectionByMapChoice, setIsSelectionByMapChoice] =
+    useState<boolean>(false);
+
   const formMethods = useForm<SolarFarmInputsData>({
     mode: "onChange",
     resolver: zodResolver(solarFarmInputs),
@@ -26,6 +42,17 @@ export const EditFarmConfigurationForm = ({
     },
     reValidateMode: "onChange",
   });
+
+  const openMap = () => {
+    setIsSelectionByMapChoice(true);
+  };
+
+  const registerLocationChange = (latLangUserChoice: LatLng | undefined) => {
+    if (latLangUserChoice) {
+      formMethods.setValue("latitude", latLangUserChoice?.lat.toFixed(4));
+      formMethods.setValue("longitude", latLangUserChoice?.lng.toFixed(4));
+    }
+  };
 
   useEffect(() => {
     if (solarFarm) {
@@ -57,9 +84,27 @@ export const EditFarmConfigurationForm = ({
               type="text"
               sx={{ width: "100%" }}
             />
-            <Typography variant="h5" fontWeight="600" color="common.black">
-              Localization
-            </Typography>
+            <Grid display="flex" alignItems="center" gap={1}>
+              <Typography variant="h5" fontWeight="600" color="common.black">
+                Localization
+              </Typography>
+              <ButtonWithIcon
+                label=""
+                icon={SelectLocalization}
+                handleClick={openMap}
+                isStartIcon={false}
+                sx={{
+                  backgroundColor: "common.white",
+                  "&:hover": { backgroundColor: "common.white" },
+                }}
+              />
+              {isSelectionByMapChoice && (
+                <MapModal
+                  setIsSelectionByMap={setIsSelectionByMapChoice}
+                  handleLogic={registerLocationChange}
+                />
+              )}
+            </Grid>
             <Grid display="flex" gap={2}>
               <FormInputField label="Latitude" name="latitude" type="text" />
               <FormInputField label="Longitude" name="longitude" type="text" />

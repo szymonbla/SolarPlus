@@ -1,10 +1,12 @@
+import dynamic from "next/dynamic";
+import { useState } from "react";
 import { Grid, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { GlobalModal } from "common/components/Modals/GlobalModal";
-import { CancelButton, SubmitButton } from "common/components/Form";
 import { creationFormResolver } from "./FarmConfigurationForms/formResolver";
-import { ProgressBar } from "common/components";
+import { LoadingSpinner, ProgressBar } from "common/components";
 import { farmProgressBar } from "common/constants";
+import { CancelButton, SubmitButton } from "common/components/Form";
 import {
   selectFarmState,
   selectProgressBarStepOrder,
@@ -14,8 +16,17 @@ import {
 } from "redux/reducers";
 import { useCreateFarmMutation } from "redux/api/v1/farm";
 
+const MapModal = dynamic(
+  () =>
+    import("common/components/Modals/MapModal/MapModal").then(
+      (item) => item.MapModal
+    ),
+  { ssr: false, loading: () => <LoadingSpinner /> }
+);
+
 export const CreationFarm = () => {
   const step = useAppSelector(selectProgressBarStepOrder);
+  const [isSelectionByMapChoice, setIsSelectionByMapChoice] = useState<boolean>(false);
   const farmConfiguration = useAppSelector(selectFarmState);
   const dispatch = useAppDispatch();
   const [createNewFarm] = useCreateFarmMutation();
@@ -33,6 +44,9 @@ export const CreationFarm = () => {
 
   return (
     <GlobalModal handleClose={closeCreationModal}>
+      {isSelectionByMapChoice && (
+        <MapModal setIsSelectionByMap={setIsSelectionByMapChoice} />
+      )}
       <Typography variant="h3" fontWeight="700" sx={{ color: "common.black" }}>
         Create farm
       </Typography>
@@ -47,7 +61,11 @@ export const CreationFarm = () => {
           height: `calc(100% - ${220}px)`,
         }}
       >
-        {creationFormResolver(step, "solarPanelsConfiguration")}
+        {creationFormResolver(
+          step,
+          "solarPanelsConfiguration",
+          setIsSelectionByMapChoice
+        )}
       </Grid>
       <Grid
         display="flex"

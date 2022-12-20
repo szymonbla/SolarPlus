@@ -12,12 +12,11 @@ import { OutputSolarFarm } from "./OutputSolarFarm";
 import { SolarFarmChart } from "./SolarFarmChart";
 import { FarmModelI } from "types";
 import { useCreateProducedFarmEnergyMutation } from "redux/api/v1/energy";
-
+import { useUserAuth } from "common/hooks";
 export const SingleSolarFarm = () => {
   const { query, isReady } = useRouter();
   const farmAttributes = useAppSelector(selectFarmState);
   const dispatch = useAppDispatch();
-
   const [fetchFarmByIdTrigger] = useLazyGetFarmByIdQuery();
   const [createProducedFarmEnergyTrigger] =
     useCreateProducedFarmEnergyMutation();

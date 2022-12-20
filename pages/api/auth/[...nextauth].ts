@@ -3,25 +3,26 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 import prisma from "lib/primsadb";
+import { RoutesDefinition } from "common/routes";
 
 export default NextAuth({
   providers: [
     GoogleProvider({
       clientId: `${process.env.GOOGLE_CLIENT_ID}`,
       clientSecret: `${process.env.GOOGLE_CLIENT_SECRET}`,
-      authorization: {
-        params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code",
-        },
-      },
     }),
     // ...add more providers here
   ],
+  session: { maxAge: 180 },
   secret: `${process.env.GOOGLE_CLIENT_SECRET}`,
   adapter: PrismaAdapter(prisma),
+  callbacks: {
+    async session({ session, token, user }) {
+      session.user.userId = user.id;
+      return session;
+    },
+  },
   pages: {
-    signIn: "/",
+    signIn: RoutesDefinition.login,
   },
 });

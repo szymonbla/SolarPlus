@@ -1,3 +1,4 @@
+import { getSession } from "next-auth/react";
 import type { NextApiRequest, NextApiResponse } from "next/types";
 
 export default async function handler(
@@ -14,12 +15,16 @@ export default async function handler(
 }
 
 async function getAllFarms(req: NextApiRequest, res: NextApiResponse) {
+  const session = await getSession({ req });
+
   try {
+    if (!session) res.json({ message: "The is no user" });
+
     const allFarms = await prisma?.farm.findMany({
       include: { location: true, pvPanel: true },
+      where: { User: { id: session?.user.userId } },
     });
-
-    return res.status(200).json(allFarms);
+    res.status(200).json(allFarms);
   } catch (error) {
     res.status(500).json({ message: "Something go wrong!", success: false });
   }

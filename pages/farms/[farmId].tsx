@@ -9,5 +9,4 @@ const SingleFarmPage = () => {
   );
 };
 
-SingleFarmPage.auth = true;
 export default SingleFarmPage;

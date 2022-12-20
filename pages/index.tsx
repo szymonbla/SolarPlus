@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { keyframes } from "@emotion/react";
-import { Typography, Grid, Button } from "@mui/material";
+import { Typography, Grid } from "@mui/material";
 import { signIn } from "next-auth/react";
 
 import { BaseLayout } from "layouts";
@@ -17,7 +17,10 @@ const float = keyframes({
 const LoginPage = () => {
   const handleGoogleSignIn = async () => {
     try {
-      await signIn("google", { callbackUrl: RoutesDefinition.dashboard });
+      await signIn("google", {
+        callbackUrl: RoutesDefinition.dashboard,
+        redirect: true,
+      });
     } catch (error) {
       console.log(error);
     }

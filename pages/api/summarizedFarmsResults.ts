@@ -1,4 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { getSession } from "next-auth/react";
 import type { NextApiRequest, NextApiResponse } from "next/types";
 import { SummarizedFarmsResults } from "types";
 
@@ -19,8 +20,12 @@ async function getSummarizedAllFarmsResults(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const session = await getSession({ req });
+
   try {
+    if (!session) res.json({ message: "The is no user" });
     const allResults = await prisma?.farm.findMany({
+      where: { User: { id: session?.user.userId } },
       select: {
         id: true,
         producedFarmEnergy: {

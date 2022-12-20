@@ -1,4 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { getSession } from "next-auth/react";
 import type { NextApiRequest, NextApiResponse } from "next/types";
 import { FarmModelI } from "types";
 
@@ -16,11 +17,14 @@ export default async function handler(
 }
 
 async function createFarm(req: NextApiRequest, res: NextApiResponse) {
-  const body = req.body as FarmModelI;
-
   try {
+    const body = req.body as FarmModelI;
+    const session = await getSession({ req });
+    if (!session) res.end();
+
     await prisma?.farm.create({
       data: {
+        User: { connect: { id: session?.user.userId } },
         farmName: body.farmName,
         location: {
           create: {
@@ -48,4 +52,3 @@ async function createFarm(req: NextApiRequest, res: NextApiResponse) {
     res.status(500).json(error);
   }
 }
-

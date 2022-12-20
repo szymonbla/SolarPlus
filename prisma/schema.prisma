@@ -44,6 +44,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  farms         Farm[]
   accounts      Account[]
   sessions      Session[]
 }
@@ -107,7 +108,10 @@ model Farm {
   producedFarmEnergy    ProducedFarmEnergy? @relation(fields: [producedFarmEnergyId], references: [id])
   producedFarmEnergyId  String?             @unique
   created               DateTime            @default(now())
+  User                  User?               @relation(fields: [userId], references: [id])
+  userId                String?
 
   @@index([pvPanelId])
   @@index([locationCoordinatesId])
+  @@index([userId])
 }

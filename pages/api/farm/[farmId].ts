@@ -1,3 +1,4 @@
+import { getSession } from "next-auth/react";
 import type { NextApiRequest, NextApiResponse } from "next/types";
 import { FarmModelI } from "types";
 
@@ -21,6 +22,7 @@ export default async function handler(
 async function getFarmById(req: NextApiRequest, res: NextApiResponse) {
   try {
     const id = req.query && Number(req.query.farmId);
+    const session = await getSession({ req });
     const farmlooking = await prisma?.farm.findUnique({
       where: {
         id,

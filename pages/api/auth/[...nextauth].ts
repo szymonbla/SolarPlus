@@ -16,6 +16,12 @@ export default NextAuth({
   session: { maxAge: 180 },
   secret: `${process.env.GOOGLE_CLIENT_SECRET}`,
   adapter: PrismaAdapter(prisma),
+  callbacks: {
+    async session({ session, token, user }) {
+      session.user.userId = user.id;
+      return session;
+    },
+  },
   pages: {
     signIn: RoutesDefinition.login,
   },

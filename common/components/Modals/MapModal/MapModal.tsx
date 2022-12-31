@@ -44,8 +44,8 @@ export const MapModal = ({
           setFarmConfiguration({
             ...actualState,
             location: {
-              latitude: String(latLangUserChoice?.lat.toFixed(4)),
-              longitude: String(latLangUserChoice?.lng.toFixed(4)),
+              latitude: latLangUserChoice?.lat.toFixed(4) ?? "",
+              longitude: latLangUserChoice?.lng.toFixed(4) ?? "",
             },
           })
         );
@@ -73,7 +73,7 @@ export const MapModal = ({
         <Typography fontWeight={600}>Choose solar farm location</Typography>
         <Typography>
           {cellValue(
-            "Latitudee",
+            "Latitude",
             latLangUserChoice?.lat.toFixed(4) ?? CENTER_LAT
           )}
         </Typography>

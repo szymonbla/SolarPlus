@@ -21,7 +21,7 @@ const MapModal = dynamic(
     import("common/components/Modals/MapModal/MapModal").then(
       (item) => item.MapModal
     ),
-  { ssr: false, loading: () => <LoadingSpinner /> }
+  { ssr: false, loading: () => <LoadingSpinner />}
 );
 
 export const CreationFarm = () => {

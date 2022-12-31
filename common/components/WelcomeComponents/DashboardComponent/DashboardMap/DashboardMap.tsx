@@ -34,10 +34,7 @@ export const DashboardMap = ({
       <Typography>test</Typography>
       {allSolarFarms.map((solarFarm) => (
         <Marker
-          position={[
-            Number(solarFarm.location.latitude),
-            Number(solarFarm.location.longitude),
-          ]}
+          position={[solarFarm.location.latitude, solarFarm.location.longitude]}
           icon={ICON}
           key={solarFarm.farmName}
         >

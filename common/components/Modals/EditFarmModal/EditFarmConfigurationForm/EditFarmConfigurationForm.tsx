@@ -34,11 +34,11 @@ export const EditFarmConfigurationForm = ({
     mode: "onChange",
     resolver: zodResolver(solarFarmInputs),
     defaultValues: {
-      loss: "",
-      peakPower: "",
+      loss: 0,
+      peakPower: 0,
       farmName: "",
-      latitude: "",
-      longitude: "",
+      latitude: 0,
+      longitude: 0,
     },
     reValidateMode: "onChange",
   });
@@ -49,16 +49,16 @@ export const EditFarmConfigurationForm = ({
 
   const registerLocationChange = (latLangUserChoice: LatLng | undefined) => {
     if (latLangUserChoice) {
-      formMethods.setValue("latitude", latLangUserChoice?.lat.toFixed(4));
-      formMethods.setValue("longitude", latLangUserChoice?.lng.toFixed(4));
+      formMethods.setValue("latitude", latLangUserChoice?.lat);
+      formMethods.setValue("longitude", latLangUserChoice?.lng);
     }
   };
 
   useEffect(() => {
     if (solarFarm) {
       const { farmName, location, pvPanel } = solarFarm;
-      formMethods.setValue("loss", String(pvPanel?.loss));
-      formMethods.setValue("peakPower", String(pvPanel?.peakPower));
+      formMethods.setValue("loss", pvPanel?.loss);
+      formMethods.setValue("peakPower", pvPanel?.peakPower);
       formMethods.setValue("farmName", farmName);
       formMethods.setValue("longitude", location.longitude);
       formMethods.setValue("latitude", location.latitude);
@@ -106,7 +106,7 @@ export const EditFarmConfigurationForm = ({
               )}
             </Grid>
             <Grid display="flex" gap={2}>
-              <FormInputField label="Latitude" name="latitude" type="text" />
+              <FormInputField label="Latitude" name="latitude" type="number" />
               <FormInputField label="Longitude" name="longitude" type="text" />
             </Grid>
             <Typography variant="h5" fontWeight="600" color="common.black">

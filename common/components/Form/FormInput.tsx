@@ -11,7 +11,7 @@ import { useController } from "react-hook-form";
 interface FormInputProps {
   label: string;
   name: string;
-  type: React.HTMLInputTypeAttribute;
+  type?: React.HTMLInputTypeAttribute;
   valueInReadOnly?: string | number;
   readOnly?: boolean;
   sx?: SxProps;

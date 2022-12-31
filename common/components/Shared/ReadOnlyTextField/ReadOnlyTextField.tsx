@@ -2,7 +2,7 @@ import { Grid, Typography } from "@mui/material";
 
 interface ReadOnlyTextFieldProps {
   label: string;
-  value: string | undefined;
+  value: string | number | undefined;
 }
 
 export const ReadOnlyTextField = ({ label, value }: ReadOnlyTextFieldProps) => {

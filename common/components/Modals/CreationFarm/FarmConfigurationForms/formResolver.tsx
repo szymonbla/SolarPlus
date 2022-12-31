@@ -1,7 +1,7 @@
+import { Dispatch, SetStateAction } from "react";
 import { SolarFarmForm } from "./SolarFarmForm";
 import { FarmInitializationForm } from "./FarmInitializationForm";
 import { SummaryPanel } from "./SummaryPanel";
-import { Dispatch, SetStateAction } from "react";
 
 export const creationFormResolver = (
   formStep: number,

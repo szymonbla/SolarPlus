@@ -21,12 +21,6 @@ export type PvPanelAttributes = {
   peakPower: number;
   loss: number;
 };
-
-export interface IdWithFarmModel {
-  farmId: number;
-  farm: Omit<FarmModelI, "id">;
-}
-
 export interface SummarizedFarmsResults {
   averagePVProduction: number;
   amountOfFarms: number;

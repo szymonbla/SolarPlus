@@ -7,7 +7,6 @@ import {
   setFarmConfiguration,
   selectFarmState,
   nextStep,
-  openModal,
 } from "redux/reducers";
 import { FormInputField } from "common/components/Form";
 import {
@@ -29,7 +28,7 @@ export const FarmInitializationForm = ({
   const actualState = useAppSelector(selectFarmState);
 
   const formMethods = useForm<FarmInitializationData>({
-    mode: "onChange",
+    mode: "onTouched",
     resolver: zodResolver(farmInitializationSchema),
     defaultValues: {
       farmName: "",
@@ -46,8 +45,8 @@ export const FarmInitializationForm = ({
           ...actualState,
           farmName,
           location: {
-            latitude: latitude,
-            longitude: longitude,
+            latitude,
+            longitude,
           },
         })
       );
@@ -96,8 +95,8 @@ export const FarmInitializationForm = ({
               />
             </Grid>
             <Grid display="flex" gap={2}>
-              <FormInputField label="Latitude" name="latitude" type="text" />
-              <FormInputField label="Longitude" name="longitude" type="text" />
+              <FormInputField label="Latitude" name="latitude" />
+              <FormInputField label="Longitude" name="longitude" />
             </Grid>
           </Grid>
         </form>

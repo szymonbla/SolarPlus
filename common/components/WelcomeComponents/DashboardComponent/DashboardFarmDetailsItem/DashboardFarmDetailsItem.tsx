@@ -51,7 +51,7 @@ export const DashboardFarmDetailsItem = ({
   );
 };
 
-function cellValue(key: string, value: string) {
+function cellValue(key: string, value: string | number) {
   return (
     <Grid display="flex" gap={2}>
       <Typography>{key}</Typography>

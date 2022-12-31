@@ -106,7 +106,7 @@ export const EditFarmConfigurationForm = ({
               )}
             </Grid>
             <Grid display="flex" gap={2}>
-              <FormInputField label="Latitude" name="latitude" type="text" />
+              <FormInputField label="Latitude" name="latitude" type="number" />
               <FormInputField label="Longitude" name="longitude" type="text" />
             </Grid>
             <Typography variant="h5" fontWeight="600" color="common.black">

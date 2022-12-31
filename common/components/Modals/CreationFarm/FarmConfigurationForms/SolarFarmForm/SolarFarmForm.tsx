@@ -3,7 +3,11 @@ import { Grid } from "@mui/material";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { setFarmConfiguration, nextStep, selectFarmState } from "redux/reducers";
+import {
+  setFarmConfiguration,
+  nextStep,
+  selectFarmState,
+} from "redux/reducers";
 
 import { FormInputField } from "common/components/Form";
 import {

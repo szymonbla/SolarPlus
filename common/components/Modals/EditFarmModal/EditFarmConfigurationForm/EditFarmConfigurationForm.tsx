@@ -34,11 +34,11 @@ export const EditFarmConfigurationForm = ({
     mode: "onChange",
     resolver: zodResolver(solarFarmInputs),
     defaultValues: {
-      loss: 0,
-      peakPower: 0,
+      loss: "",
+      peakPower: "",
       farmName: "",
-      latitude: 0,
-      longitude: 0,
+      latitude: "",
+      longitude: "",
     },
     reValidateMode: "onChange",
   });
@@ -49,16 +49,16 @@ export const EditFarmConfigurationForm = ({
 
   const registerLocationChange = (latLangUserChoice: LatLng | undefined) => {
     if (latLangUserChoice) {
-      formMethods.setValue("latitude", latLangUserChoice?.lat);
-      formMethods.setValue("longitude", latLangUserChoice?.lng);
+      formMethods.setValue("latitude", latLangUserChoice?.lat.toFixed(4));
+      formMethods.setValue("longitude", latLangUserChoice?.lng.toFixed(4));
     }
   };
 
   useEffect(() => {
     if (solarFarm) {
       const { farmName, location, pvPanel } = solarFarm;
-      formMethods.setValue("loss", pvPanel?.loss);
-      formMethods.setValue("peakPower", pvPanel?.peakPower);
+      formMethods.setValue("loss", String(pvPanel?.loss));
+      formMethods.setValue("peakPower", String(pvPanel?.peakPower));
       formMethods.setValue("farmName", farmName);
       formMethods.setValue("longitude", location.longitude);
       formMethods.setValue("latitude", location.latitude);

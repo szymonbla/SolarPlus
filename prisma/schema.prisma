@@ -59,8 +59,8 @@ model VerificationToken {
 
 model LocationCoordinates {
   id        String  @id @default(uuid())
-  latitude  Decimal
-  longitude Decimal
+  latitude  String
+  longitude String
   Farm      Farm?
 }
 

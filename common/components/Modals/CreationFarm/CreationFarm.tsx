@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Grid, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { GlobalModal } from "common/components/Modals/GlobalModal";
@@ -21,12 +21,13 @@ const MapModal = dynamic(
     import("common/components/Modals/MapModal/MapModal").then(
       (item) => item.MapModal
     ),
-  { ssr: false, loading: () => <LoadingSpinner />}
+  { ssr: false, loading: () => <LoadingSpinner /> }
 );
 
 export const CreationFarm = () => {
   const step = useAppSelector(selectProgressBarStepOrder);
-  const [isSelectionByMapChoice, setIsSelectionByMapChoice] = useState<boolean>(false);
+  const [isSelectionByMapChoice, setIsSelectionByMapChoice] =
+    useState<boolean>(false);
   const farmConfiguration = useAppSelector(selectFarmState);
   const dispatch = useAppDispatch();
   const [createNewFarm] = useCreateFarmMutation();
@@ -38,7 +39,11 @@ export const CreationFarm = () => {
   };
 
   const handleSubmit = async () => {
-    await createNewFarm(farmConfiguration);
+    await createNewFarm({
+      farmName: farmConfiguration.farmName,
+      location: farmConfiguration.location,
+      pvPanel: farmConfiguration.pvPanel,
+    });
     closeCreationModal();
   };
 

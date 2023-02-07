@@ -27,8 +27,9 @@ export const FarmsComponent = () => {
   }, [fetchSolarFarmsTrigger]);
 
   const deleteSolarFarmById = useCallback(async () => {
-    await deleteSolarFarmTrigger(farmToEdit?.id ?? 0);
-  }, [deleteSolarFarmTrigger, farmToEdit]);
+    allSolarFarms.length > 0 &&
+      (await deleteSolarFarmTrigger(farmToEdit?.id ?? 0));
+  }, [allSolarFarms.length, deleteSolarFarmTrigger, farmToEdit?.id]);
 
   useEffect(() => {
     fetchAllSolarFarms();
@@ -41,7 +42,7 @@ export const FarmsComponent = () => {
       sx={{ height: "100%", p: "4rem" }}
       gap={2}
     >
-      {isInEditFarm ? (
+      {allSolarFarms.length > 0 && isInEditFarm ? (
         <EditFarmModal
           setIsInEditFarm={setIsInEditFarm}
           solarFarm={farmToEdit}

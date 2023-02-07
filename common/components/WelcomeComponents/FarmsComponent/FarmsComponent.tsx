@@ -19,9 +19,19 @@ export const FarmsComponent = () => {
     useLazyGetAllFarmsQuery();
   const [deleteSolarFarmTrigger] = useDeleteFarmByIdMutation();
   const farmToEditIndex = Number(selectionModel[0]) ?? 0;
-  const farmToEdit = allSolarFarms.find(
-    (farm) => farm.id === farmToEditIndex
-  ) ?? { farmName: "", location: {}, pvPanel: {}, id: -1 };
+  const farmToEdit =
+    allSolarFarms.find((farm) => farm.id === farmToEditIndex) ??
+    ({
+      farmName: "",
+      location: {
+        latitude: "",
+        longitude: "",
+      },
+      pvPanel: {
+        loss: -1,
+        peakPower: -1,
+      },
+    } as FarmModelI);
 
   const fetchAllSolarFarms = useCallback(async () => {
     const response = await fetchSolarFarmsTrigger("");
